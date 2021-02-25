@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% load humanize %}
 
-{%block title %} Social Feed {% endblock title %}
+{%block title %} {{user.username}} {% endblock title %}
 
 
 {%block content %}
@@ -16,22 +16,34 @@
                     <h5>PROFILE DETAILS</h5>
                 </div>
                 <div class="card-body">
+                    <h5>Profile Name: {{user.username}}</h5>
+                    <hr>
                     <ul class="list-group">
+                        <a href="{%url 'social-follow-list' user.username %}">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Follow
+                                <span class="badge badge-primary badge-pill">{{user.SocialProfile.follows.count}}</span>
+                              </li>
+                        </a>
+                       <a href="{% url 'social-follower-list' user.username %}">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                          Following
-                          <span class="badge badge-primary badge-pill">14</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                          Follower
-                          <span class="badge badge-primary badge-pill">{{user.SocialProfile.followed_by.count}}</span>
-                        </li>
+                            Follower
+                            <span class="badge badge-primary badge-pill">{{user.SocialProfile.followed_by.count}}</span>
+                          </li>
+                       </a>
                         <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                           Morbi leo risus
                           <span class="badge badge-primary badge-pill">1</span> -->
                         </li>
                       </ul>
                       {% if user != request.user %}
-                        <a href="#" class="btn btn-sm btn-info mt-2 btn-block">Follow</a>
+                      {%if request.user.SocialProfile in user.SocialProfile.followed_by.all %}
+                      <a href="{% url 'social-user-profile-unfollow' user.username %}" class="btn btn-sm btn-danger mt-2 btn-block">Unfollow</a>
+
+                      {%else %}
+                      <a href="{% url 'social-user-profile-follow' user.username %}" class="btn btn-sm btn-info mt-2 btn-block">Follow</a>
+
+                      {%endif%}
                       {%endif%}
                     <!-- <h4>Following: 2</h4>
                     <h4>Follower: </h4> -->

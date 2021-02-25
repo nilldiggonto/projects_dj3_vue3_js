@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{%block title %} {{user.username}}|Follower{% endblock title %}
+
+
+{%block content %}
+{%include 'social_app/social_nav.html' %}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-dark text-white text-center">
+                    <h5>Follower of- {{user.username}}</h5>
+
+                    <p>Total Follower: {{user.SocialProfile.followed_by.count}}</p>
+                </div>
+                <div class="card-body">
+                    {%for social in user.SocialProfile.followed_by.all %}
+
+                        <p><a href="{%url 'social-profile' social.user.username %}">{{social.user.username}}</a></p>
+                    {%empty%}
+                        {%if request.user == user %}
+                    <p>You Don't Have any follower to show</p>
+                        {%else%}
+                        <p>{{user.username}} Doesn't have any follower to show</p>
+                        {%endif%}
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
