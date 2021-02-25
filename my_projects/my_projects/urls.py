@@ -7,6 +7,8 @@ from .views import home_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view,name='homepage'),
+
+    path('social',include('social_project.social_app.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
