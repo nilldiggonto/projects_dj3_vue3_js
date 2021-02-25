@@ -18,15 +18,18 @@
 
                 <div class="card-body">
                     <form class="form my-2 " action="{%url 'social-search' %}" method="GET">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" name="query" value="{{query}}">
-                        <button class="btn  my-2 btn-sm btn-primary btn-block" type="submit">Search</button>
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search 🔎🔎🔎🔎" name="query" value="{{query}}">
+                        <button class="btn  my-2 btn-sm btn-primary btn-block" type="submit">Search 🔎</button>
                       </form>
                 </div>
 
                 <div class="card-footer">
+                  
                     {% for social in socials %}
-                    <p>{{social.username}}</p>
+                    <a href="{% url 'social-profile' social.username %}" class="btn btn-outline-primary  btn-block">{{social.username}} 🧐🧐🧐🧐🧐</a>
                     {%endfor%}
+
+                   
                 </div>
             </div>
         </div>
