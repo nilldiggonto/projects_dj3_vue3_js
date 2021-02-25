@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-
+{% load humanize %}
 
 {%block title %} Social Feed {% endblock title %}
 
@@ -9,28 +9,37 @@
 
 <div class="container" id=socialApp>
     <div class="row d-flex justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center bg-dark text-white">
-                    <h4>FEED ONE</h4>
+                <div class="card-header bg-dark text-white">
+                    <h4>[[user]]->POST SOMETHING:</h4>
                     <form action="" v-on:submit.prevent="submitSocial()">
                         <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input v-model="body" type="text" class="form-control" placeholder="Write something" name="body">
+                            <!-- <label for="email">Email:</label> -->
+                            <textarea class="form-control" name="" v-model="body" id="" cols="30" rows="5" placeholder="Write something..."></textarea>
                           </div>
 
-                        <button class="btn btn-sm btn-success" type="submit"> submit</button>
+                        <button class="btn btn-sm btn-success float-right" type="submit"> submit</button>
 
                     </form>
                 </div>
                 <div class="card-body">
+
                     <div v-for="social in socials">
                        
                         <blockquote class="blockquote">
                             <p class="mb-0">[[social.body]]</p>
-                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                            <footer class="blockquote-footer">Posted by -[[social.user]] <cite title="Source Title">@[[social.created_at]]</cite></footer>
                           </blockquote>
                     </div>
+                    {% for social in socials %}
+                    <blockquote class="blockquote">
+                        <p class="mb-0">{{social.body}}</p>
+                        <footer class="blockquote-footer">Posted by -{{social.created_by}}<cite title="Source Title">@{{social.created_at | naturaltime}}</cite></footer>
+                      </blockquote>
+
+                    {% endfor %}
+      
 
                 </div>
             </div>
@@ -50,12 +59,41 @@
         data(){
             return{
                 socials: [],
-                body:''
+                body:'',
+                user: '{{request.user.username}}',
+                created_at:'now'
+                
             }
         },
         methods:{
             submitSocial(){
                 console.log('ok ok submiteed')
+                if (this.body.length>0){
+                    var social = {
+                        'body':this.body,
+                        'user':this.user,
+                        'created_at':this.created_at
+                    };
+                    this.socials.unshift(social);
+
+                    //
+                    fetch("{% url 'social-add-api' %}",{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json',
+                            'X-csrftoken':'{{csrf_token}}'
+                        },
+                        credentials:'same-origin',
+                        body:JSON.stringify(social)
+                    })
+                    .then((response)=>{
+                        console.log(response)
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    })
+                }
+                this.body = ''
             }
         }
     })
