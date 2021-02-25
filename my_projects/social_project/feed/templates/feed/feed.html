@@ -1,1 +1,66 @@
-<h4>Feed Page</h4>
+{% extends 'base/base.html' %}
+
+
+{%block title %} Social Feed {% endblock title %}
+
+
+{%block content %}
+{%include 'social_app/social_nav.html' %}
+
+<div class="container" id=socialApp>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center bg-dark text-white">
+                    <h4>FEED ONE</h4>
+                    <form action="" v-on:submit.prevent="submitSocial()">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input v-model="body" type="text" class="form-control" placeholder="Write something" name="body">
+                          </div>
+
+                        <button class="btn btn-sm btn-success" type="submit"> submit</button>
+
+                    </form>
+                </div>
+                <div class="card-body">
+                    <div v-for="social in socials">
+                       
+                        <blockquote class="blockquote">
+                            <p class="mb-0">[[social.body]]</p>
+                            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                          </blockquote>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{%block script %}
+<script>
+    new Vue({
+        el: '#socialApp',
+        delimiters: ['[[',']]'],
+        data(){
+            return{
+                socials: [],
+                body:''
+            }
+        },
+        methods:{
+            submitSocial(){
+                console.log('ok ok submiteed')
+            }
+        }
+    })
+</script>
+
+{%endblock script %}
+
+
