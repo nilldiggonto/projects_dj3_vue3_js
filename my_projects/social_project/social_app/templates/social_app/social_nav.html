@@ -13,7 +13,7 @@
         </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'social-signup' %}">LogOut</a>
+          <a class="nav-link" href="{% url 'social-logout' %}">LogOut</a>
         </li>
 
         {%else %}
