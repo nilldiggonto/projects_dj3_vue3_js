@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/',views.LogoutView.as_view(),name='social-logout'),
 
     path('-feed/',include('social_project.feed.urls')),
+    path('-social-profile/',include('social_project.social_profile.urls')),
 ]

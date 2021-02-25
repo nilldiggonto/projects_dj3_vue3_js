@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{%block title %} Social Feed {% endblock title %}
+
+
+{%block content %}
+{%include 'social_app/social_nav.html' %}
+
+<div class="container">
+    <div class="row no-gutters">
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-dark text-center text-white">
+                    <h5>PROFILE DETAILS</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Following
+                          <span class="badge badge-primary badge-pill">14</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Follower
+                          <span class="badge badge-primary badge-pill">{{user.SocialProfile.followed_by.count}}</span>
+                        </li>
+                        <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
+                          Morbi leo risus
+                          <span class="badge badge-primary badge-pill">1</span> -->
+                        </li>
+                      </ul>
+                      {% if user != request.user %}
+                        <a href="#" class="btn btn-sm btn-info mt-2 btn-block">Follow</a>
+                      {%endif%}
+                    <!-- <h4>Following: 2</h4>
+                    <h4>Follower: </h4> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+           <div class="card">
+               <div class="card-header bg-dark text-white text-center">
+                   <h5>ALL POSTS</h5>
+               </div>
+               <div class="card-body">
+                {%for social in user.socials.all %}
+                <blockquote class="blockquote text-center">
+                    <p class="mb-0">{{social.body}}.</p>
+                    <footer class="blockquote-footer">Created By: {{social.created_by}} <cite title="Source Title">@{{social.created_at|naturaltime}}</cite></footer>
+                  </blockquote>
+                  <hr>
+    
+                {% endfor%}
+               </div>
+           </div>
+        </div>
+    </div>
+</div>
+{%endblock content%}
