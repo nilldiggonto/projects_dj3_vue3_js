@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
     # 'myapps',
     'social_project.social_app',
-    'social_projects.social_profile',
+    'social_project.social_profile',
 ]
 
 MIDDLEWARE = [
