@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from .views import social_frontpage,signupView
 from django.contrib.auth import views
 
@@ -8,4 +8,6 @@ urlpatterns = [
     path('login/',views.LoginView.as_view(template_name='social_app/login.html'),name='social-login'),
 
     path('logout/',views.LogoutView.as_view(),name='social-logout'),
+
+    path('-feed/',include('social_project.feed.urls')),
 ]

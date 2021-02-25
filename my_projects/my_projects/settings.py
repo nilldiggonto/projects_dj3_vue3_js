@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # 'myapps',
     'social_project.social_app',
     'social_project.social_profile',
+    'social_project.feed',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
