@@ -36,6 +36,8 @@ INSTALLED_APPS = [
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGOUT_REDIRECT_URL = 'homepage'
+LOGIN_URL = 'social-login'
+LOGIN_REDIRECT_URL = 'homepage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
