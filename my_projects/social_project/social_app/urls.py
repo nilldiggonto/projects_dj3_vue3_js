@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import test_view
+from .views import social_frontpage
 
 urlpatterns = [
-    path('',test_view,name='test'),
+    path('',social_frontpage,name='social-home'),
 ]
