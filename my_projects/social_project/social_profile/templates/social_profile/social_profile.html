@@ -13,6 +13,10 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header bg-dark text-center text-white">
+                    {% if user.SocialProfile.avatar %}
+                    <img src="{{user.SocialProfile.avatar.url}}" alt="" style="height: 150px; max-width: 100%;">
+                    {%endif%}
+
                     <h5>PROFILE DETAILS</h5>
                     <a href="{% url 'social-edit-avatar' %}" class="btn btn-sm btn-info">Edit Avatar</a>
                 </div>
@@ -54,12 +58,16 @@
         <div class="col-md-8">
            <div class="card">
                <div class="card-header bg-dark text-white text-center">
-                   <h5>ALL POSTS</h5>
+                   <h5>YOUR POSTS</h5>
                </div>
                <div class="card-body">
                 {%for social in user.socials.all %}
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0">{{social.body}}.</p>
+                
+                <blockquote class="blockquote text-left">
+                    {% if user.SocialProfile.avatar %}
+                    <img src="{{user.SocialProfile.avatar.url}}" alt="" style="height: 50px; max-width: 100%;">
+                    {%endif%}
+                    <p class="mb-0 d-inline">{{social.body}}.</p>
                     <footer class="blockquote-footer">Created By: {{social.created_by}} <cite title="Source Title">@{{social.created_at|naturaltime}}</cite></footer>
                   </blockquote>
                   <hr>

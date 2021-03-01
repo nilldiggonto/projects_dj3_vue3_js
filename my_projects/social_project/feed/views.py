@@ -11,6 +11,7 @@ def feedView(request):
 
     socials  = Social.objects.filter(created_by_id__in = userids)
     context = {
+        'user':request.user,
         'socials':socials,
     }
     template_name ='feed/feed.html'

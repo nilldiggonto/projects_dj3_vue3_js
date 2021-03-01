@@ -27,16 +27,23 @@
 
                     <div v-for="social in socials">
                        
-                        <blockquote class="blockquote">
-                            <p class="mb-0">[[social.body]]</p>
+                        <blockquote class="blockquote text-left">
+                            
+                        <img :src="social.avatar" alt="" style="height: 50px; max-width: 100%;">
+                        
+                            <p class="mb-0 d-inline">[[social.body]]</p>
                             <footer class="blockquote-footer">Posted by -[[social.user]] <cite title="Source Title">@[[social.created_at]]</cite></footer>
                           </blockquote>
                     </div>
                     {% for social in socials %}
-                    <blockquote class="blockquote">
-                        <p class="mb-0">{{social.body}}</p>
-                        <footer class="blockquote-footer">Posted by -{{social.created_by}}<cite title="Source Title">@{{social.created_at | naturaltime}}</cite></footer>
+                    <blockquote class="blockquote text-left">
+                        {% if social.created_by.SocialProfile.avatar %}
+                        <img src="{{social.created_by.SocialProfile.avatar.url}}" alt="" style="height: 50px; max-width: 100%;">
+                        {%endif%}
+                        <p class="mb-0 d-inline">{{social.body}}.</p>
+                        <footer class="blockquote-footer">Created By: {{social.created_by}} <cite title="Source Title">@{{social.created_at|naturaltime}}</cite></footer>
                       </blockquote>
+                      <hr>
 
                     {% endfor %}
       
@@ -61,7 +68,8 @@
                 socials: [],
                 body:'',
                 user: '{{request.user.username}}',
-                created_at:'now'
+                created_at:'now',
+                avatar: '{% if user.SocialProfile.avatar %} {{user.SocialProfile.avatar.url}} {%endif%}'
                 
             }
         },
@@ -72,7 +80,9 @@
                     var social = {
                         'body':this.body,
                         'user':this.user,
-                        'created_at':this.created_at
+                        'created_at':this.created_at,
+                        'avatar':this.avatar,
+                        
                     };
                     this.socials.unshift(social);
 
