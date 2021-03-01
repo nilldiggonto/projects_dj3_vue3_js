@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{%block title %} {{user.username}}|Avatar{% endblock title %}
+
+
+{%block content %}
+{%include 'social_app/social_nav.html' %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center bg-dark text-light">
+                    <h4>{{user.username}}'s Avatar</h4>
+                </div>
+
+                <div class="card-body text-center">
+                    {% if user.SocialProfile.avatar %}
+                    <img src="{{user.SocialProfile.avatar.url}}" alt="" style="height: 150px; max-width: 100%;">
+                    {%endif%}
+                </div>
+                <div class="card-footer">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        {{form|crispy}}
+
+                        <!-- <input type="text"> -->
+                        <button class="btn btn-info btn-sm" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{%endblock content%}
