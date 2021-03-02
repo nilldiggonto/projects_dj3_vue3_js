@@ -11,4 +11,5 @@ urlpatterns = [
 
     path('-feed/',include('social_project.feed.urls')),
     path('-social-profile/',include('social_project.social_profile.urls')),
+    path('-converse/',include('social_project.social_conversation.urls'))
 ]

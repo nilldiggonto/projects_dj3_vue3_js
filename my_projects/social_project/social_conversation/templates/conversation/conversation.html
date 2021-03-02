@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{%block title %} {{user.username}}|Converse {% endblock title %}
+{%block favicon %} <link rel="shortcut icon" href="https://image.flaticon.com/icons/png/512/32/32438.png" type="image/x-icon">
+{%endblock favicon %}
+
+
+{%block content %}
+{%include 'social_app/social_nav.html' %}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>CONVERSATIONS</h4>
+                </div>
+
+                <div class="card-body">
+                    {% for con in converse %}
+
+                        {% for user in con.users.all %}
+
+                            {%if user != request.user %}
+
+                                <p>{{user.username}} - {{con.modified_at|naturaltime}}</p>
+
+                            {%endif%}
+                        {%endfor%}
+
+                        {%empty%}
+                        <p>No Conversations yet</p>
+
+
+                    {% endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock content%}
