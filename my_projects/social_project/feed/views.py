@@ -34,12 +34,16 @@ def searchView(request):
 
     if (len(query)>0):
         socials = User.objects.filter(username__icontains=query)
+        socials_feeds = Social.objects.filter(body__icontains=query)
     else:
         socials = []
+        socials_feeds = []
+
     
     context = {
         'query':query,
         'socials':socials,
+        'socials_feeds':socials_feeds
     }
     template_name = 'feed/search.html'
     return render(request,template_name,context)

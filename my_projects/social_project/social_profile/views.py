@@ -7,9 +7,19 @@ from .forms import SocialProfileForm
 @login_required
 def socialprofileView(request,username):
     user = get_object_or_404(User,username=username)
+    socials = user.socials.all()
+    for social in socials:
+        # print(social.likes)
+        likes = social.likes.filter(created_by_id=request.user.id)
+
+        if likes.count()>0:
+            social.liked= True
+        else:
+            social.liked = False
 
     context = {
         'user':user,
+        'socials':socials
     }
     template_name = 'social_profile/social_profile.html'
 

@@ -2,6 +2,8 @@
 {% load humanize %}
 
 {%block title %} {{user.username}} {% endblock title %}
+{%block favicon %} <link rel="shortcut icon" href="https://image.flaticon.com/icons/png/512/32/32438.png" type="image/x-icon">
+{%endblock favicon %}
 
 
 {%block content %}
@@ -28,54 +30,130 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 Follow
                                 <span class="badge badge-primary badge-pill">{{user.SocialProfile.follows.count}}</span>
-                              </li>
+                            </li>
                         </a>
-                       <a href="{% url 'social-follower-list' user.username %}">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Follower
-                            <span class="badge badge-primary badge-pill">{{user.SocialProfile.followed_by.count}}</span>
-                          </li>
-                       </a>
+                        <a href="{% url 'social-follower-list' user.username %}">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Follower
+                                <span
+                                    class="badge badge-primary badge-pill">{{user.SocialProfile.followed_by.count}}</span>
+                            </li>
+                        </a>
                         <!-- <li class="list-group-item d-flex justify-content-between align-items-center">
                           Morbi leo risus
                           <span class="badge badge-primary badge-pill">1</span> -->
                         </li>
-                      </ul>
-                      {% if user != request.user %}
-                      {%if request.user.SocialProfile in user.SocialProfile.followed_by.all %}
-                      <a href="{% url 'social-user-profile-unfollow' user.username %}" class="btn btn-sm btn-danger mt-2 btn-block">Unfollow</a>
+                    </ul>
+                    {% if user != request.user %}
+                    {%if request.user.SocialProfile in user.SocialProfile.followed_by.all %}
+                    <a href="{% url 'social-user-profile-unfollow' user.username %}"
+                        class="btn btn-sm btn-danger mt-2 btn-block">Unfollow</a>
 
-                      {%else %}
-                      <a href="{% url 'social-user-profile-follow' user.username %}" class="btn btn-sm btn-info mt-2 btn-block">Follow</a>
+                    {%else %}
+                    <a href="{% url 'social-user-profile-follow' user.username %}"
+                        class="btn btn-sm btn-info mt-2 btn-block">Follow</a>
 
-                      {%endif%}
-                      {%endif%}
+                    {%endif%}
+                    {%endif%}
                     <!-- <h4>Following: 2</h4>
                     <h4>Follower: </h4> -->
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-           <div class="card">
-               <div class="card-header bg-dark text-white text-center">
-                   <h5>YOUR POSTS</h5>
-               </div>
-               <div class="card-body">
-                {%for social in user.socials.all %}
-                
-                <blockquote class="blockquote text-left">
-                    {% if user.SocialProfile.avatar %}
-                    <img src="{{user.SocialProfile.avatar.url}}" alt="" style="height: 50px; max-width: 100%;">
-                    {%endif%}
-                    <p class="mb-0 d-inline">{{social.body}}.</p>
-                    <footer class="blockquote-footer">Created By: {{social.created_by}} <cite title="Source Title">@{{social.created_at|naturaltime}}</cite></footer>
-                  </blockquote>
-                  <hr>
-    
-                {% endfor%}
-               </div>
-           </div>
+        <div class="col-md-8" id="socialApp">
+            <div class="card">
+                <div class="card-header bg-dark text-white text-center">
+                    <!-- <h5>All Latest Post</h5> -->
+                    <h4><b>LATEST POSTS</b></h4>
+                    <a class="btn btn-sm btn-success" href="{%url 'social-feed' %}">POST SOMETHING</a>
+                </div>
+                <div class="card-body">
+                    {%for social in user.socials.all %}
+
+                    <blockquote class="blockquote text-left">
+                        {% if user.SocialProfile.avatar %}
+                        <img src="{{user.SocialProfile.avatar.url}}" alt="" style="height: 50px; max-width: 100%;">
+                        {%endif%}
+                        <p class="mb-0 d-inline">{{social.body}}.</p>
+                        <footer class="blockquote-footer">Created By: {{social.created_by}}
+                            <cite title="Source Title">@{{social.created_at|naturaltime}}</cite>
+                            <!--like area-->
+                            <a @click="likeSocial({{social.id}})" v-if="!liked_socials.includes({{social.id}})"
+                                class="btn btn-sm btn-outline-success "><i class="fas fa-thumbs-up"></i>
+
+
+                            </a>
+                            <span class="badge badge-success" v-if="liked_socials.includes({{social.id}})"><i
+                                    class="fas fa-thumbs-up"></i></span>
+                            <small id="likes-{{social.id}}" class="badge badge-info">{{social.likes.count}} likes
+                                </small>
+
+
+                        </footer>
+                    </blockquote>
+                    <hr>
+
+                    {% endfor%}
+                </div>
+            </div>
         </div>
     </div>
 </div>
 {%endblock content%}
+
+
+
+
+
+{%block script %}
+<script>
+    new Vue({
+        el: '#socialApp',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                // socials: [],
+                // body: '',
+                // user: '{{request.user.username}}',
+                // created_at: 'now',
+                // avatar: '{% if user.SocialProfile.avatar %} {{user.SocialProfile.avatar.url}} {%endif%}',
+                liked_socials: [{%for social in socials %} {%if social.liked %} {{ social.id }}, {% endif %} {% endfor %}]
+
+        }
+    },
+        methods: {
+        likeSocial(social_id) {
+            this.liked_socials.push(parseInt(social_id));
+
+            var social = {
+                'social_id': social_id,
+            };
+
+            fetch("{% url 'social-like-api' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-csrftoken': '{{csrf_token}}'
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(social)
+            })
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            const el = document.getElementById('likes-' + social_id);
+            // console.log(el)
+            const likes = parseInt(el.innerHTML.split('')[0]) + 1;
+            // console.log(likes)
+            el.innerHTML = likes + ' likes';
+
+        },
+        
+    },
+    })
+</script>
+
+{%endblock script %}
