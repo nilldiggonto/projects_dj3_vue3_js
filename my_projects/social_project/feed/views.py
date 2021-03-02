@@ -10,8 +10,10 @@ def feedView(request):
         userids.append(s.user.id)
 
     socials  = Social.objects.filter(created_by_id__in = userids)
+    # print(socials)
 
     for social in socials:
+        # print(social.likes)
         likes = social.likes.filter(created_by_id=request.user.id)
 
         if likes.count()>0:

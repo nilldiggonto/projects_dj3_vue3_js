@@ -14,12 +14,17 @@ def api_add_feed(request):
 
 @login_required
 def api_add_like(request):
-    print(request)
-    print(request)
-    print(request)
-    print(request)
+    # print(request)
+    # print(request)
+    # print(request)
+    # print(request)
 
     data = json.loads(request.body)
+    print(data)
+    print(data)
+    print(data)
+    print(data)
+
     social_id = data['social_id']
 
     if not Like.objects.filter(social_id= social_id).filter(created_by=request.user).exists():

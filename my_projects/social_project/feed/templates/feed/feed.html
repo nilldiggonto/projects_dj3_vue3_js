@@ -48,15 +48,15 @@
 
                         <footer class="blockquote-footer">Created By: {{social.created_by}} <cite
                                 title="Source Title">@{{social.created_at|naturaltime}}</cite>
-                            <a @click="likeSocial({{social.id}})" v-if="!liked_socials.includes({{social.id}})" href="#"
-                                class="btn btn-sm btn-success ">👌
+                            <a @click="likeSocial({{social.id}})" v-if="!liked_socials.includes({{social.id}})"
+                                class="btn btn-sm btn-warning "><i class="fas fa-thumbs-up"></i>
 
-                                
+
                             </a>
-                            <span class="badge badge-success" v-if="liked_socials.includes({{social.id}})">Liked
-                                <small id="likes-{{social.id}}">{{social.likes.count}}</small>
-                            </span>
-                                
+                            <span class="badge badge-success" v-if="liked_socials.includes({{social.id}})"><i class="fas fa-thumbs-up"></i></span>
+                                <small id="likes-{{social.id}}" class="badge badge-info">{{social.likes.count}} likes</small>
+                            
+
 
 
                         </footer>
@@ -71,6 +71,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 {% endblock %}
@@ -88,7 +90,7 @@
                 user: '{{request.user.username}}',
                 created_at: 'now',
                 avatar: '{% if user.SocialProfile.avatar %} {{user.SocialProfile.avatar.url}} {%endif%}',
-                liked_socials: [{%for social in socials %} {%if social.Like %} {{ social.id }}, {% endif %} {% endfor %}]
+                liked_socials: [{%for social in socials %} {%if social.liked %} {{ social.id }}, {% endif %} {% endfor %}]
 
         }
     },
