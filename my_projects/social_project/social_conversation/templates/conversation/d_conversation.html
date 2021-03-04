@@ -19,6 +19,8 @@
 
                 <div class="card-body">
 
+                  
+
                     {%for message in conversation.messages.all %}
 
                     <blockquote class="blockquote text-left">
@@ -34,7 +36,9 @@
                      {%endfor%}
 
 
-                    <div v-for="message in messages">
+
+
+                     <div v-for="message in messages">
                         <blockquote class="blockquote text-left">
 
                             <img :src="message.avatar" alt="" style="height: 50px; max-width: 100%;">
@@ -44,6 +48,8 @@
                                     title="Source Title">@[[message.created_at]]</cite></footer>
                         </blockquote>
                     </div>
+
+                   
 
                     <hr>
                     <form action="" v-on:submit.prevent="submitMessage()" class="form">

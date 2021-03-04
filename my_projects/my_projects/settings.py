@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'social_project.social_profile',
     'social_project.feed',
     'social_project.social_conversation',
+    'social_project.social_notification',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -65,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_project.social_notification.context_processors.notifications'
             ],
         },
     },

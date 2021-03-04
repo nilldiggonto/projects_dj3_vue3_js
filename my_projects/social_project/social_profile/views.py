@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .forms import SocialProfileForm
+
+from social_project.social_notification.utils import create_notification
+
 # Create your views here.
 @login_required
 def socialprofileView(request,username):
@@ -30,6 +33,10 @@ def follow_userView(request,username):
     user = get_object_or_404(User,username=username)
 
     request.user.SocialProfile.follows.add(user.SocialProfile)
+
+
+    #notification
+    create_notification(request,user,'follower')
     return redirect('social-profile', username=username)
 
 @login_required

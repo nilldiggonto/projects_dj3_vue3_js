@@ -21,12 +21,19 @@
         </li> -->
         {% if request.user.is_authenticated %}
 
+        
+
         <li class="nav-item">
           <a class="nav-link" href="{% url 'social-profile' request.user.username %}"><i class="fas fa-home"></i></a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" href="{% url 'social-converse' %}"><i class="fas fa-comments"></i></a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'social-notification'%}">Notifications({{notifications.count}})</a>
         </li>
 
         <!-- <li class="nav-item">
