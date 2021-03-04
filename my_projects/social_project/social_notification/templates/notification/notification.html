@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+
+{% load humanize %}
+
+{%block title %} search {% endblock title %}
+
+
+{%block content %}
+{%include 'social_app/social_nav.html' %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <!-- <div class="card-header"> -->
+                    {% if not notifications %}
+                        <div class="card-header text-light text-center bg-danger">
+                            YOU DON'T HAVE ANY NOTIFICATIONS
+                        </div>
+                    {% endif%}
+
+                    <div class="card-header">
+                        {%for notification in notifications %}
+                            {%if notification.created_by.SocialProfile.avatar%}
+                            <img src="{{notification.created_by.SocialProfile.avatar.url}}" alt="" style="height: 50px; max-width: 100%;">
+
+                            {%endif%}
+
+                            {%if notification.notification_type == 'message' %}
+                            <p>aaaaaaaaaaaaaaa</p>
+                                <a href="{%url 'social-notification' %}?goto=conversation&notification={{notification.id}}">
+                                    <strong>{{notification.created_by.username}}  send message</strong>
+                                    <small>{{notification.created_at|naturaltime}}</small>
+                                </a>
+
+                                {%elif notification.notification_type == 'follower' %}
+                                <a href="{%url 'social-notification' %}?goto=conversation&notification={{notification.id}}">
+                                    <strong>{{notification.created_by.username}} following</strong>
+                                    <small>{{notification.created_at|naturaltime}}</small>
+                                </a>
+
+
+                                {%elif notification.notification_type == 'like' %}
+                                <a href="{%url 'social-notification' %}?goto=conversation&notification={{notification.id}}">
+                                    <strong>{{notification.created_by.username}} liked it</strong>
+                                    <small>{{notification.created_at|naturaltime}}</small>
+                                </a>
+                                {%endif%}
+                        {%endfor%}
+                    </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}
