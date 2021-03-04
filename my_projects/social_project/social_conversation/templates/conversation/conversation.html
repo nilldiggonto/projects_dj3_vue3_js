@@ -24,7 +24,9 @@
 
                             {%if user != request.user %}
 
+                               <a href="{%url 'social-converse-one' user.id %}">
                                 <p>{{user.username}} - {{con.modified_at|naturaltime}}</p>
+                               </a>
 
                             {%endif%}
                         {%endfor%}

@@ -71,6 +71,7 @@
         delimiters:['[[',']]'],
         data(){
             return {
+                
                 messages:[],
                 content:'',
                 user:'{{request.user.username}}',
@@ -82,6 +83,7 @@
             submitMessage(){
                 if (this.content.length>0){
                     var message = {
+                        'conversation_id': '{{conversation.id}}',
                         'content':this.content,
                         'user':this.user,
                         'created_at':this.created_at,
@@ -89,7 +91,7 @@
                     };
                     this.messages.unshift(message);
 
-                    fetch('/api/add_messsage/',{
+                    fetch("{% url 'social-add-message' %}",{
                         method:'POST',
                         headers:{
                             'Content-Type':'application/json',
