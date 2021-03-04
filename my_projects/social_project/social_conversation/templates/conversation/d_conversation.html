@@ -1,0 +1,116 @@
+{% extends 'base/base.html' %}
+{% load humanize %}
+
+{%block title %} {{user.username}}|Converse DM {% endblock title %}
+{%block favicon %} <link rel="shortcut icon" href="https://image.flaticon.com/icons/png/512/32/32438.png" type="image/x-icon">
+{%endblock favicon %}
+
+
+{%block content %}
+{%include 'social_app/social_nav.html' %}
+
+<div class="container" id="conversationAPP">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center bg-dark text-light">
+                    <h4>CONVERSATIONS DM</h4>
+                </div>
+
+                <div class="card-body">
+
+                    {%for message in conversation.messages.all %}
+
+                    <blockquote class="blockquote text-left">
+                        {% if message.created_by.SocialProfile.avatar %}
+                        <img src="{{message.created_by.SocialProfile.avatar.url}}" alt="" style="height: 50px; max-width: 100%;">
+                        {%endif%}
+                        <p class="mb-0 d-inline">{{message.content}}.</p>
+                        <footer class="blockquote-footer">Created By: {{message.created_by.username}}
+                            <cite title="Source Title">@{{message.created_at|naturaltime}}</cite>
+                            <!--like area-->
+                        </footer>
+                    </blockquote>
+                     {%endfor%}
+
+
+                    <div v-for="message in messages">
+                        <blockquote class="blockquote text-left">
+
+                            <img :src="message.avatar" alt="" style="height: 50px; max-width: 100%;">
+    
+                            <p class="mb-0 d-inline">[[message.content]]</p>
+                            <footer class="blockquote-footer">Posted by -[[message.user]] <cite
+                                    title="Source Title">@[[message.created_at]]</cite></footer>
+                        </blockquote>
+                    </div>
+
+                    <hr>
+                    <form action="" v-on:submit.prevent="submitMessage()" class="form">
+                        <textarea class="form-control" name="content" v-model="content" id="" cols="30" rows="3" placeholder="Youre Message"></textarea>
+
+                        <button class="btn btn-sm btn-primary mt-2 btn-block" type="submit">send</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock content%}
+
+
+{%block script %}
+
+<script>
+    var conversationapp = new Vue({
+        el:'#conversationAPP',
+        delimiters:['[[',']]'],
+        data(){
+            return {
+                messages:[],
+                content:'',
+                user:'{{request.user.username}}',
+                created_at: 'Now',
+                avatar:'{%if request.user.SocialProfile.avatar%}{{request.user.SocialProfile.avatar.url}}{%endif%}'
+            }
+        },
+        methods:{
+            submitMessage(){
+                if (this.content.length>0){
+                    var message = {
+                        'content':this.content,
+                        'user':this.user,
+                        'created_at':this.created_at,
+                        'avatar':this.avatar
+                    };
+                    this.messages.unshift(message);
+
+                    fetch('/api/add_messsage/',{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json',
+                            'X-CSRFToken':'{{csrf_token}}',
+
+                        },
+                        credentials:'same-origin',
+                        body:JSON.stringify(message)
+                    })
+                    .then((response)=>{
+                        console.log(response)
+                    })
+                    .catch((error)=>{
+                        console.log(error)
+                    })
+                    this.content= ''
+                }
+            }
+        }
+    })
+</script>
+
+
+{%endblock script%}

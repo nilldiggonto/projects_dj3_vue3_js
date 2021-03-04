@@ -45,7 +45,7 @@
                         </li>
                     </ul>
                     {% if user != request.user %}
-                    <a href="{%url 'social-converse' %}" class="btn btn-sm btn-warning mt-2 btn-block">Direct Chat</a>
+                    <a href="{%url 'social-converse-one' user.id %}" class="btn btn-sm btn-warning mt-2 btn-block">Direct Chat</a>
                     {%if request.user.SocialProfile in user.SocialProfile.followed_by.all %}
                     <a href="{% url 'social-user-profile-unfollow' user.username %}"
                         class="btn btn-sm btn-danger mt-2 btn-block">Unfollow</a>

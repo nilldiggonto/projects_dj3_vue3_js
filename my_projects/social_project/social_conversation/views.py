@@ -18,7 +18,7 @@ def conversationView(request):
 
 @login_required
 def conversationRecipient(request,user_id):
-    template_name = 'conversation/conversation.html'
+    template_name = 'conversation/d_conversation.html'
     conversations = Conversation.objects.filter(users__in=[request.user.id])
     conversations = conversations.filter(users__in=[user_id])
 
