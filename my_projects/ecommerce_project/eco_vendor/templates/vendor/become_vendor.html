@@ -1,0 +1,36 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Ecommerce| Vendor {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://i.dlpng.com/static/png/6766240_preview.png" type="image/x-icon"> 
+{%endblock favicon%}
+
+{%block content%}
+{%include 'ecommerce/eco_nav.html'%}
+<!-- <h4>Ecommerce</h4> -->
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card border border-primary">
+                <div class="card-header text-center bg-dark text-white">
+                    <h5><i class="fas fa-users"></i> BECOME A VENDOR</h5>
+                </div>
+                <div class="card-body">
+                    <form action="" method="POST" class="form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="vendor">Give a vendor name:</label>
+                            <input type="text" class="form-control" placeholder="Enter Vendor Name" id="vendor" name="vendor">
+                          </div>
+                        <!-- <input type="text" name="vendor"> -->
+                        <button class="btn btn-sm btn-success btn-block" type="submit">Go</button>
+                        <!-- <input type="submit" name="" id=""> -->
+                    </form>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+{%endblock%}
