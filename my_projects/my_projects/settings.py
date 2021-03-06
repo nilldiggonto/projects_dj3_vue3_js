@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'social_project.social_notification',
     #eco
     'ecommerce_project.ecommerce_app',
+    'ecommerce_project.eco_vendor',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
