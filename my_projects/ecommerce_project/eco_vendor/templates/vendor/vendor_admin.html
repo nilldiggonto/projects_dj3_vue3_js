@@ -10,11 +10,13 @@
 {%include 'ecommerce/eco_nav.html'%}
 
 <!-- <h4>Vendor details page</h4> -->
-<div class="container">
+<div class="container-fluid">
     <div class="row no-gutters">
         <div class="col-md-4">
-            <div class="card p-4 bg-danger">
-                will work later
+            <div class="card">
+                <div class="card-header">
+                    <a href="{%url 'eco-add-product' %}" class="btn btn-block btn-sm btn-primary">Add a product</a>
+                </div>
             </div>
         </div>
 
@@ -22,7 +24,7 @@
             {%if products %}
             <div class="card">
                 <div class="card-header">
-                    ALL PRODUCTS
+                    <a class="btn btn-sm btn-success btn-block">Your Products</a>
                 </div>
 
                 <div class="card-body">
@@ -35,9 +37,11 @@
                           </tr>
                         </thead>
                         <tbody>
-                            {%for producut in products %}
+                            <!-- aaaaaaa -->
+                            {%for product in products %}
                           <tr>
-                            <td>{{product.title}}}}</td>
+                              <!-- aaaaa -->
+                            <td>{{product.title}}</td>
                             <td>{{product.price}}</td>
                             <!-- <td>john@example.com</td> -->
                           </tr>
@@ -50,7 +54,11 @@
 
 
             {%else%}
-                <h4>You Don't have any product to display</h4>
+                <div class="card">
+                    <div class="card-header">
+                        <a class="btn btn-sm btn-danger text-light btn-block">You Don't have any product to display</a>
+                    </div>
+                </div>
             {%endif%}
         </div>
     </div>

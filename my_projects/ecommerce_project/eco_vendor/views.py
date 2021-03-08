@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 
 
 from ecommerce_project.eco_product.models import Category,Product
+
+from .forms import ProductForm
+from django.utils.text import slugify
 # Create your views here.
 #
 @login_required
@@ -43,4 +46,21 @@ def vendorView(request):
     products = vendor.products.all()
 
     return render(request,template_name,{'vendor':vendor,'products':products})
+
+@login_required
+def add_product(request):
+    template_name = 'vendor/add_product.html'
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            product = form.save(commit=False)
+            product.vendor = request.user.vendor
+            product.slug = slugify(product.title)
+            product.save()
+
+            return redirect('eco-vendor-admin')
+    else:
+        form = ProductForm()
+    return render(request,template_name,{'form':form})
     
