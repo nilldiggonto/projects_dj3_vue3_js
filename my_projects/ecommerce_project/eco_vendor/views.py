@@ -32,3 +32,11 @@ def become_vendor(request):
     return render(request,template_name,{'form':form})
     # # else:
     #     return redirect('eco-home')
+
+@login_required
+def vendorView(request):
+    template_name = 'vendor/vendor_admin.html'
+    vendor = request.user.vendor
+
+    return render(request,template_name,{'vendor':vendor})
+    

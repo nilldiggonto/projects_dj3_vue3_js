@@ -28,6 +28,7 @@
 <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
   {%if vendor %}
   <a class="navbar-brand btn-success btn btn-sm">You are a vendor</a>
+  <a href="{%url 'eco-vendor-admin' %}" class="navbar-brand btn-info btn btn-sm">Your Dashboard</a>
   {%else%}
     <a class="navbar-brand btn-primary btn btn-sm" href="{%url 'eco-become-vendor' %}"><i class="fas fa-users"></i> Become a vendor</a>
    
