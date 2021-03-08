@@ -3,6 +3,9 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from .models import Vendor
 from django.contrib.auth.decorators import login_required
+
+
+from ecommerce_project.eco_product.models import Category,Product
 # Create your views here.
 #
 @login_required
@@ -37,6 +40,7 @@ def become_vendor(request):
 def vendorView(request):
     template_name = 'vendor/vendor_admin.html'
     vendor = request.user.vendor
+    products = vendor.products.all()
 
-    return render(request,template_name,{'vendor':vendor})
+    return render(request,template_name,{'vendor':vendor,'products':products})
     

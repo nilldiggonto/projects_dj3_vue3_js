@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     #eco
     'ecommerce_project.ecommerce_app',
     'ecommerce_project.eco_vendor',
+    'ecommerce_project.eco_product',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
