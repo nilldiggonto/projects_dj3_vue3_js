@@ -9,7 +9,7 @@
         <!-- <p class="card-text">{{product.description}}</p> -->
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-outline-success">View</button>
+            <a href="{% url 'eco-p-detail' product.category.slug product.slug %}" type="button" class="btn btn-sm btn-outline-success">View</a>
             <button type="button" class="btn btn-sm btn-outline-warning">Edit</button>
           </div>
           <small class="badge badge-primary text-light">Price: ${{product.price}}</small>

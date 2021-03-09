@@ -9,16 +9,17 @@
 {%block content%}
 {%include 'ecommerce/eco_nav.html'%}
 <div class="container">
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-4">
+    <div class="row d-flex justify-content-center no-gutters">
+      <div class="col-md-12">
         <div class="card">
             <div class="card-header text-center bg-dark">
                 <h4 class="bg-primary text-light p-2">{{product.title}}</h4>
                 <!-- <p></p> -->
-                <img class="img-fluid" src="{{product.get_thumbnail}}" style="max-width:100%; height: 150px;;" alt="Card image cap">
+                <img class="img-fluid" src="{{product.get_thumbnail}}" style="max-width:100%;" alt="Card image cap">
             </div>
             <div class="card-body">
                 <p>{{product.description}}</p>
+                <hr>
                 <div class="d-flex justify-content-between align-items-center">
                     <small>From:{{product.vendor.name}}</small>
                     <!-- <div class="btn-group">
@@ -30,10 +31,16 @@
             </div>
         </div>
       </div>
-
-      <div class="col-md-8">
+      <!-- <hr> -->
+      <!-- <br> -->
+      <div class="col-md-12 mt-2">
           {%if similar_products%}
-         
+         <div class="card">
+           <div class="card-header bg-info p-4 text-light text-center">
+             SIMILAR PRODUCTS
+           </div>
+           <div class="card-body">
+             
           {% for product in similar_products %}
           {%include 'ecommerce/p_list.html'%}
           <!-- <div class="col-md-4">
@@ -58,9 +65,17 @@
         </div> -->
       
         {%endfor%}
+           </div>
+         </div>
 
 
-          {%empty%}
+          {%else%}
+          <div class="card">
+            <div class="card-header bg-warning p-4 text-light text-center">
+              <h4>NO SIMILAR PRODUCTS FOUND</h4>
+
+            </div>
+          </div>
 
           {%endif%}
       </div>
