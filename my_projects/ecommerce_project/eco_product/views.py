@@ -19,4 +19,9 @@ def productDetail(request,category_slug,product_slug):
     }
     return render(request,template_name,context)
 
-    
+
+def category(request,category_slug):
+    template_name = 'product/category.html'
+    category = get_object_or_404(Category, slug=category_slug)
+
+    return render(request,template_name,{'category':category})

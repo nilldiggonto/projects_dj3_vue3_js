@@ -1,0 +1,95 @@
+{%extends 'base/base.html'%}
+
+{%block title %}{{category.title}} {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://i.dlpng.com/static/png/6766240_preview.png" type="image/x-icon"> 
+{%endblock favicon%}
+
+{%block content%}
+
+{%include 'ecommerce/eco_nav.html'%}
+
+<!-- <h4>Ecommerce</h4> -->
+
+<div class="position-relative overflow-hidden  text-center bg-light">
+    <div class="col-md-5 p-lg-5 mx-auto ">
+        <h1 class="display-4 font-weight-normal">{{category.title}}</h1>
+        <!-- <p class="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with
+            this example based on Apple's marketing pages.</p>
+        <a class="btn btn-outline-primary" href="#">VISIT THE SITES</a> -->
+    </div>
+    <div class="product-device box-shadow d-none d-md-block"></div>
+    <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
+</div>
+<hr>
+
+<div class="container">
+  <div class="row">
+
+    {% for product in category.products.all %}
+  
+    {%include 'ecommerce/p_list.html'%}
+
+    
+    
+
+    <!-- <div class="col-md-4">
+      <div class="card mb-4 box-shadow text-center">
+        <div class="card-header bg-dark">
+          <p class="bg-primary text-light p-2">{{product.title}}</p>
+          <img class="img-fluid" src="{{product.get_thumbnail}}" style="max-width:100%; height: 150px;;" alt="Card image cap">
+        </div>
+       
+        <div class="card-body">
+          <p class="card-text">{{product.description}}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-success">View</button>
+              <button type="button" class="btn btn-sm btn-outline-warning">Edit</button>
+            </div>
+            <small class="badge badge-primary text-light">Price: ${{product.price}}</small>
+          </div>
+        </div>
+
+      </div>
+  </div> -->
+
+  {%endfor%}
+</div>
+</div>
+
+
+
+
+
+
+
+<!-- {% if vendor} -->
+<!-- <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark"> -->
+ 
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+        <li class="nav-item dropup">
+          <a class="nav-link dropdown-toggle" href="https://getbootstrap.com/" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropup</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown10">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+    </div> -->
+  <!-- </nav> -->
+{%endblock%}

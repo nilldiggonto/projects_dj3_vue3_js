@@ -33,6 +33,7 @@
                           <tr>
                             <th>Title</th>
                             <th>Price</th>
+                            <th>More</th>
                             <!-- <th>Email</th> -->
                           </tr>
                         </thead>
@@ -43,6 +44,7 @@
                               <!-- aaaaa -->
                             <td>{{product.title}}</td>
                             <td>{{product.price}}</td>
+                            <td><a href="{% url 'eco-p-detail' product.category.slug product.slug %}" class="btn btn-sm btn-info">show</a></td>
                             <!-- <td>john@example.com</td> -->
                           </tr>
                           {%endfor%}
