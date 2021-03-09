@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 import random
+from django.db.models import Q
 
 # Create your views here.
 from .models import Category,Product
@@ -25,3 +26,13 @@ def category(request,category_slug):
     category = get_object_or_404(Category, slug=category_slug)
 
     return render(request,template_name,{'category':category})
+
+
+
+#search
+def search(request):
+    query = request.GET.get('q','')
+    products = Product.objects.filter(Q(title__icontains=query)| Q(description__icontains=query))
+
+    template_name = 'product/search.html'
+    return render(request,template_name,{'products':products,'query':query})
