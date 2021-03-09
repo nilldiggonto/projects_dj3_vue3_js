@@ -6,11 +6,19 @@
 {%endblock favicon%}
 
 {%block content%}
+
 {%include 'ecommerce/eco_nav.html'%}
+{%if vendor %}
+<a class="navbar-brand btn-success btn btn-sm">You are a vendor</a>
+<a href="{%url 'eco-vendor-admin' %}" class="navbar-brand btn-info btn btn-sm">Your Dashboard</a>
+{%else%}
+  <a class="navbar-brand btn-primary btn btn-sm" href="{%url 'eco-become-vendor' %}"><i class="fas fa-users"></i> Become a vendor</a>
+ 
+  {%endif%}
 <!-- <h4>Ecommerce</h4> -->
 
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-    <div class="col-md-5 p-lg-5 mx-auto my-5">
+<div class="position-relative overflow-hidden  text-center bg-light">
+    <div class="col-md-5 p-lg-5 mx-auto ">
         <h1 class="display-4 font-weight-normal">Ecommerce Project</h1>
         <p class="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with
             this example based on Apple's marketing pages.</p>
@@ -19,20 +27,52 @@
     <div class="product-device box-shadow d-none d-md-block"></div>
     <div class="product-device product-device-2 box-shadow d-none d-md-block"></div>
 </div>
+<hr>
+
+<div class="container">
+  <div class="row">
+
+    {% for product in products %}
+  
+    {%include 'ecommerce/p_list.html'%}
+
+    
+    
+
+    <!-- <div class="col-md-4">
+      <div class="card mb-4 box-shadow text-center">
+        <div class="card-header bg-dark">
+          <p class="bg-primary text-light p-2">{{product.title}}</p>
+          <img class="img-fluid" src="{{product.get_thumbnail}}" style="max-width:100%; height: 150px;;" alt="Card image cap">
+        </div>
+       
+        <div class="card-body">
+          <p class="card-text">{{product.description}}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-outline-success">View</button>
+              <button type="button" class="btn btn-sm btn-outline-warning">Edit</button>
+            </div>
+            <small class="badge badge-primary text-light">Price: ${{product.price}}</small>
+          </div>
+        </div>
+
+      </div>
+  </div> -->
+
+  {%endfor%}
+</div>
+</div>
+
+
 
 
 
 
 
 <!-- {% if vendor} -->
-<nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
-  {%if vendor %}
-  <a class="navbar-brand btn-success btn btn-sm">You are a vendor</a>
-  <a href="{%url 'eco-vendor-admin' %}" class="navbar-brand btn-info btn btn-sm">Your Dashboard</a>
-  {%else%}
-    <a class="navbar-brand btn-primary btn btn-sm" href="{%url 'eco-become-vendor' %}"><i class="fas fa-users"></i> Become a vendor</a>
-   
-    {%endif%}
+<!-- <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark"> -->
+ 
     <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -57,5 +97,5 @@
         </li>
       </ul>
     </div> -->
-  </nav>
+  <!-- </nav> -->
 {%endblock%}

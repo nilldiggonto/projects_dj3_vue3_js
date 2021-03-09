@@ -1,0 +1,20 @@
+<div class="col-md-4">
+    <div class="card mb-4 box-shadow text-center">
+      <div class="card-header bg-dark">
+        <p class="bg-primary text-light p-2">{{product.title}}</p>
+        <img class="img-fluid" src="{{product.get_thumbnail}}" style="max-width:100%; height: 150px;;" alt="Card image cap">
+      </div>
+     
+      <div class="card-body">
+        <!-- <p class="card-text">{{product.description}}</p> -->
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-success">View</button>
+            <button type="button" class="btn btn-sm btn-outline-warning">Edit</button>
+          </div>
+          <small class="badge badge-primary text-light">Price: ${{product.price}}</small>
+        </div>
+      </div>
+
+    </div>
+</div>
