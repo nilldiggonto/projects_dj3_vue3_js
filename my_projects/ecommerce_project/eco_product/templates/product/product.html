@@ -5,30 +5,91 @@
 <link rel="shortcut icon" href="https://i.dlpng.com/static/png/6766240_preview.png" type="image/x-icon"> 
 {%endblock favicon%}
 
+{%block style%}
+<style>
+  @keyframes show-toast{
+    0% {bottom: -100%;}
+    20% {bottom: 50px;}
+    80% {bottom: 50px;}
+    100% {bottom: -100%;}
+  }
+
+  .notification.is-toast{
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 4s;
+    z-index: 100;
+  }
+</style>
+
+{%endblock style%}
+
 
 {%block content%}
 {%include 'ecommerce/eco_nav.html'%}
 <div class="container">
     <div class="row d-flex justify-content-center no-gutters">
       <div class="col-md-12">
+        <!--messages-->
+          {%if messages %}
+
+          {% for message in messages %}
+
+            <p class="alert alert-success notification is-toast">{{message}}</p>
+
+          {%endfor%}
+
+          {% endif %}
+        <!--messages-->
         <div class="card">
-            <div class="card-header text-center bg-dark">
-                <h4 class="bg-primary text-light p-2">{{product.title}}</h4>
-                <!-- <p></p> -->
-                <img class="img-fluid" src="{{product.get_thumbnail}}" style="max-width:100%; height: 400px;" alt="Card image cap">
+            <div class="card-header  bg-dark ">
+               <div class="row ">
+                 <div class="col-md-6">
+                  <h4 class="bg-primary text-light p-2">{{product.title}}  @<small>{{product.vendor.name}}</small> <br>
+                    <hr>
+                    <form method="POST">
+                      {%csrf_token%}
+                      <div class="form-row ">
+                        <div class="col-10">
+                          <input type="number" min="1" class="form-control" id="num" value="1" name="quantity">
+                        </div>
+                        <div class="col-2">
+                          <input type="submit" class="btn  btn-warning form-control" value="Add to cart">
+                        </div>
+                      </div>
+                    </form>
+
+
+                    <!-- <hr> -->
+                    
+                    <!-- <hr> -->
+                      <!-- <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-success">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-warning">Edit</button>
+                      </div> -->
+                      <small class="badge badge-info text-light">Price: ${{product.price}}</small>
+                      <hr>
+                      <p>{{product.description}}</p>
+                  </h4>
+  
+                  
+                  <!-- <p></p> -->
+                 </div>
+                 <div class="col-md-6">
+                  <img class="img-fluid" src="{{product.get_thumbnail}}" style="max-width:100%; height: 400px;" alt="Card image cap">
+
+                 </div>
+               </div>
             </div>
-            <div class="card-body">
-                <p>{{product.description}}</p>
+            <!-- <div class="card-body">
+                
                 <hr>
                 <div class="d-flex justify-content-between align-items-center">
-                    <small>From:{{product.vendor.name}}</small>
-                    <!-- <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-success">View</button>
-                      <button type="button" class="btn btn-sm btn-outline-warning">Edit</button>
-                    </div> -->
-                    <small class="badge badge-primary text-light">Price: ${{product.price}}</small>
+                    
                   </div>
-            </div>
+            </div> -->
         </div>
       </div>
       <!-- <hr> -->

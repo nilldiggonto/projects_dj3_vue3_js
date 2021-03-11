@@ -8,7 +8,8 @@ class Cart(object):
         cart = self.session.get(settings.CART_SESSION_ID)
 
         if not cart:
-            cart = self.session[settings.CART_SEESION_ID] = {}
+            cart = self.session[settings.CART_SESSION_ID] = {}
+            # pass
         self.cart = cart 
 
     def __iter__(self):
