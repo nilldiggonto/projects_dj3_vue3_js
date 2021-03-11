@@ -1,0 +1,115 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}cart {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://i.dlpng.com/static/png/6766240_preview.png" type="image/x-icon"> 
+{%endblock favicon%}
+
+{%block style%}
+<style>
+  @keyframes show-toast{
+    0% {bottom: -100%;}
+    20% {bottom: 50px;}
+    80% {bottom: 50px;}
+    100% {bottom: -100%;}
+  }
+
+  .notification.is-toast{
+    position: fixed;
+    bottom: 100%;
+    right: 20px;
+    animation-name: show-toast;
+    animation-duration: 4s;
+    z-index: 100;
+  }
+</style>
+
+{%endblock style%}
+
+
+{%block content%}
+{%include 'ecommerce/eco_nav.html'%}
+
+<div class="container-fluid">
+    <div class="row">
+      
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    CART LIST
+                </div>
+                {%if cart%}
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <th></th>
+                            <th>Product</th>
+                            <th>quantity</th>
+                            <th>Price</th>
+                            <th></th>
+                        </thead>
+
+                        <tbody>
+                            {%for item in cart %}
+
+                            <tr>
+                                <td>
+                                    <img src="{{item.product.get_thumbnail}}" style="max-width: 100%; height: 25px;" alt="">
+                                </td>
+
+                                <td>
+                                    <a href="{%url 'eco-p-detail' item.product.category.slug item.product.slug %}">
+                                        {{item.product.title}}
+                                    </a>
+                                </td>
+
+                                <td>
+                                    {{item.quantity}}
+
+                                    <a href="?change_quanity={{item.id}}&quantity=-1">-</a>
+                                    <a href="?change_quanity={{item.id}}&quantity=1">+</a>
+
+                                </td>
+
+                                <td>
+                                    ${{item.total_price}}
+                                </td>
+
+                                <td>
+                                    <a href="?remove_from_cart={{item.id}}" class="btn btn-sm btn-danger">Remove</a>
+                                </td>
+                            </tr>
+
+
+                            {%endfor%}
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td><strong>Total Cost</strong></td>
+                                <td><strong>{{cart|length}}</strong></td>
+                                <td colspan="2"><strong>${{cart.get_total_cost}}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                {%else%}
+                <div class="card-body">
+                    <h4>No products added yet</h4>
+                </div>
+
+
+                {%endif%}
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+{%endblock%}

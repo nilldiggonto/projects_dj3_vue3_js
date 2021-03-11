@@ -77,6 +77,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_project.social_notification.context_processors.notifications',
                 'ecommerce_project.eco_product.context_processors.menu_category',
+                'ecommerce_project.eco_cart.context_processors.cart',
             ],
         },
     },
