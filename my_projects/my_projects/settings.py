@@ -40,12 +40,17 @@ INSTALLED_APPS = [
     'ecommerce_project.ecommerce_app',
     'ecommerce_project.eco_vendor',
     'ecommerce_project.eco_product',
+    'ecommerce_project.eco_cart',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGOUT_REDIRECT_URL = 'homepage'
 LOGIN_URL = 'social-login'
 LOGIN_REDIRECT_URL = 'homepage'
+
+#for cart
+SESSION_COOKIE_AGE = 86400
+CART_SESSION_ID = 'cart'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,6 +83,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'my_projects.wsgi.application'
+
 
 
 # Database
