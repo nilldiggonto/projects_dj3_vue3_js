@@ -17,9 +17,15 @@ def productDetail(request,category_slug,product_slug):
     if request.method == 'POST':
         form = AddToCartForm(request.POST)
 
+
         if form.is_valid():
             quantity = form.cleaned_data['quantity']
-            cart.add(product_id=product.id,quantity=quantity,update_quantity=False)
+            print(quantity)
+            print(quantity)
+            print(quantity)
+            print(quantity)
+
+            cart.add(product_id=product.id,quantity=quantity,update_quantity=True)
             messages.success(request,'Product added to cart')
             return redirect('eco-p-detail', category_slug=category_slug,product_slug=product_slug)
     else:
