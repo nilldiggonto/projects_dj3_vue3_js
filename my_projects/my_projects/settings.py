@@ -18,6 +18,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+STRIPE_PUB_KEY = 'pk_test_51IVMBZEot1lBvM8YE7wS4DE1xsNVfuP0aFFx0V6DsQVLtizwdeCs4LoLEMk2W7fO9uVAhbe588PgBkCkWBsWhpa100DQBHQFmV'
+STRIPE_SECRET_KEY = 'sk_test_51IVMBZEot1lBvM8YCX3hhDZbCW8bulmIXLYAuptI5rrZJTPYejDwMKY2kS5WD8l6KxTWL2sa5TFjsHwAzttoMJWb00HaVtEGLI'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'ecommerce_project.eco_vendor',
     'ecommerce_project.eco_product',
     'ecommerce_project.eco_cart',
+    'ecommerce_project.eco_order',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
