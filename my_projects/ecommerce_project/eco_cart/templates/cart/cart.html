@@ -114,6 +114,24 @@
                 </div>
                 <div class="card-body">
                     <form class="needs-validation" novalidate>
+                      {%if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                          {{ form.non_field_errors}}
+                        </div>
+                      {%endif%}
+
+                      {% if form.erros %}
+                          <div class="card text-center">
+                            <div class="card-header">
+                              {%for field in form %}
+
+                                {%for error in field.errors %}
+                                  <li class="alert alert-warning"><strong>{{field.label}}</strong> {{error}}</li>
+                                {%endfor%}
+                                {%endfor %}
+                            </div>
+                          </div>
+                      {%endif%}
                         <div class="row">
                           <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
@@ -257,6 +275,17 @@
                         <hr class="mb-4">
                         <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
                       </form>
+                      {%if messages %}
+                        {%for message in messages%}
+                        <div class="alert alert-success">
+                          {{message}}
+                        </div>
+                        {%endfor%}
+                      {%endif%}
+
+                      <div id="cart-element">
+                        <h4>Something cool will happen here</h4>
+                      </div>
                     
                 </div>
             </div>
@@ -272,3 +301,9 @@
 
 
 {%endblock%}
+
+
+{%block script %}
+
+
+{%endblock script %}
