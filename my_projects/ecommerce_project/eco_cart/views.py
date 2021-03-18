@@ -11,6 +11,7 @@ from ecommerce_project.eco_order.utils import checkout
 def cart_detail(request):
     cart = Cart(request)
     tempalte_name = 'cart/cart.html'
+    form = CheckoutForm()
     
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
@@ -35,10 +36,10 @@ def cart_detail(request):
             order = checkout(request,first_name,last_name,email,address,zipcode,place,phone,cart.get_total_cost())
 
             cart.clear()
-            pass
-            # return redirect('eco-success-checkout')
-        else:
-            form = CheckoutForm()
+            # pass
+            return redirect('eco-cart-success')
+    else:
+        form = CheckoutForm()
 
 
 
@@ -59,3 +60,8 @@ def cart_detail(request):
 
         return redirect('eco-cart')
     return render(request,tempalte_name,{'form':form,'stripe_pub_key':settings.STRIPE_PUB_KEY})
+
+
+
+def order_success(request):
+    return render(request,'cart/success.html')
