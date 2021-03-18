@@ -113,7 +113,8 @@
                     <h4>Shipping Address</h4>
                 </div>
                 <div class="card-body">
-                    <form class="needs-validation" novalidate id="payment-form">
+                    <form class="needs-validation" novalidate id="payment-form" method="POST">
+                      {%csrf_token%}
                       {%if form.non_field_errors %}
                         <div class="alert alert-danger">
                           {{ form.non_field_errors}}

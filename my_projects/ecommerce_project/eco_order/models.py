@@ -13,7 +13,7 @@ class Order(models.Model):
     phone               = models.CharField(max_length=120)
     created_at          = models.DateTimeField(auto_now_add=True)
     paid_amount         = models.DecimalField(max_digits=8,decimal_places=2)
-    vendors             = models.ForeignKey(Vendor,related_name='orders',on_delete=models.CASCADE)
+    vendors             = models.ForeignKey(Vendor,related_name='orders',on_delete=models.CASCADE,null=True,blank=True)
 
     class Meta:
         ordering = ['-created_at']

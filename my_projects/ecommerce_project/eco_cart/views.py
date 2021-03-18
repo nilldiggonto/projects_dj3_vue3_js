@@ -17,7 +17,7 @@ def cart_detail(request):
         form = CheckoutForm(request.POST)
         if form.is_valid():
             stripe.api_key = settings.STRIPE_SECRET_KEY
-            stripe_token = form.cleaned_data['stripe']
+            stripe_token = form.cleaned_data['stripe_token']
             charge = stripe.Charge.create(
                 amount = int(cart.get_total_cost() * 100),
                 currency = 'USD',
@@ -27,7 +27,7 @@ def cart_detail(request):
 
             first_name = form.cleaned_data['first_name']
             last_name  = form.cleaned_data['last_name']
-            email       = form.changed_data['email']
+            email       = form.cleaned_data['email']
             phone       = form.cleaned_data['phone']
             address     = form.cleaned_data['address']
             zipcode     = form.cleaned_data['zipcode']

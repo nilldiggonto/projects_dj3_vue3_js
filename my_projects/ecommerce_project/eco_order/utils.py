@@ -7,5 +7,6 @@ def checkout(request,first_name,last_name,email,address,zipcode,place,phone,amou
 
     for item in Cart(request):
         OrderItem.objects.create(order=order,product=item['product'],vendor=item['product'].vendor,price=item['product'].price,quantity=item['quantity'])
-        order.vendor.add(item['product'].vendor)
+        order.vendors = item['product'].vendor
+        order.save()
     return order
