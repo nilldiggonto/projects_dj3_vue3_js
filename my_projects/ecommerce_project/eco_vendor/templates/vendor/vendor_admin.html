@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {%block title %}Vendor Admin {%endblock title%}
 {%block favicon %}
-<link rel="shortcut icon" href="https://i.dlpng.com/static/png/6766240_preview.png" type="image/x-icon"> 
+<link rel="shortcut icon" href="https://i.dlpng.com/static/png/6766240_preview.png" type="image/x-icon">
 {%endblock favicon%}
 
 
@@ -17,9 +17,14 @@
                 <div class="card-header">
                     <a href="{%url 'eco-add-product' %}" class="btn btn-block btn-sm btn-primary">Add a product</a>
                 </div>
+                <div class="card-footer">
+                    <strong>My Balance:</strong> ${{vendor.get_balance}} <br>
+                    <strong>My Paid amount:</strong> ${{vendor.get_paid_amount}} <br>
+
+                </div>
             </div>
             <hr>
-            
+
         </div>
 
         <div class="col-md-8">
@@ -32,92 +37,150 @@
                 <div class="card-body">
                     <table class="table">
                         <thead>
-                          <tr>
-                            <th>Title</th>
-                            <th>Price</th>
-                            <th>More</th>
-                            <!-- <th>Email</th> -->
-                          </tr>
+                            <tr>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>More</th>
+                                <!-- <th>Email</th> -->
+                            </tr>
                         </thead>
                         <tbody>
                             <!-- aaaaaaa -->
                             {%for product in products %}
-                          <tr>
-                              <!-- aaaaa -->
-                            <td>{{product.title}}</td>
-                            <td>{{product.price}}</td>
-                            <td><a href="{% url 'eco-p-detail' product.category.slug product.slug %}" class="btn btn-sm btn-info">show</a></td>
-                            <!-- <td>john@example.com</td> -->
-                          </tr>
-                          {%endfor%}
-                       
+                            <tr>
+                                <!-- aaaaa -->
+                                <td>{{product.title}}</td>
+                                <td>{{product.price}}</td>
+                                <td><a href="{% url 'eco-p-detail' product.category.slug product.slug %}"
+                                        class="btn btn-sm btn-info">show</a></td>
+                                <!-- <td>john@example.com</td> -->
+                            </tr>
+                            {%endfor%}
+
                         </tbody>
-                      </table>
+                    </table>
                 </div>
             </div>
 
 
             {%else%}
-                <div class="card">
-                    <div class="card-header">
-                        <a class="btn btn-sm btn-danger text-light btn-block">You Don't have any product to display</a>
-                    </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="btn btn-sm btn-danger text-light btn-block">You Don't have any product to display</a>
                 </div>
+            </div>
             {%endif%}
         </div>
 
 
+        <!-- </div> -->
+        <!-- </div> -->
+    </div>
+
+    <hr>
+    <div class="row">
         <div class="col-md-12">
-            <!-- <div class="col-md-4"> -->
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Order Tab</h4>
-                    </div>
-                    {%if orders %}
-                    {%for order in orders %}
-                    <div class="card-body border border-primary">
-                       
-                       
-    
-                        <div class="card-header">
-                            <button class="btn btn-sm btn-block  {%if order.fully_paid %} btn-success {%else%} btn-warning {%endif%}">
+            <div class="card">
+                <div class="card-header bg-dark text-light">
+                    <h4>Order Tab</h4>
+                </div>
+                {%if orders %}
+                {%for order in orders %}
+
+                <div class="card-body border border-primary">
+
+
+                    <div class="row no-gutters">
+                        <div class="card-header col-md-4 border border-warning p-2">
+                            <button
+                                class="btn btn-sm btn-block  {%if order.fully_paid %} btn-success {%else%} btn-warning {%endif%}">
                                 {%if order.fully_paid %} Fully Paid {%else%} Not Paid {%endif%}
                             </button>
                             <p>#{{order.id}}-{{order.first_name}} {{order.last_name}}</p>
-                            <!-- <ul class="list-group">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                 Name
-                                  <span class="badge badge-primary badge-pill">{{order.first_name}} {{order.last_name}}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                  Address
-                                  <span class="badge badge-primary badge-pill">{{order.address}}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                  zipcode and place
-                                  <span class="badge badge-primary badge-pill">{{order.zipcode}} {{order.place}}</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Email
-                                    <span class="badge badge-primary badge-pill">{{order.email}}</span>
-                                  </li>
-                                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Phone
-                                    <span class="badge badge-primary badge-pill">{{order.phone}}</span>
-                                  </li>
-                              </ul> -->
-                              <!-- <hr> -->
-    
+                            <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                     Name
+                      <span class="badge badge-primary badge-pill">{{order.first_name}} {{order.last_name}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      Address
+                      <span class="badge badge-primary badge-pill">{{order.address}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      zipcode and place
+                      <span class="badge badge-primary badge-pill">{{order.zipcode}} {{order.place}}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Email
+                        <span class="badge badge-primary badge-pill">{{order.email}}</span>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Phone
+                        <span class="badge badge-primary badge-pill">{{order.phone}}</span>
+                      </li>
+                  </ul>
+                            <!-- <hr> -->
+
                         </div>
-    
-                    </div>
+
+
+                        <div class="card-header col-md-8 border border-info p-2">
+                            <button
+                                class="btn btn-sm btn-block  btn-info">
+                                 Order Table
+                            </button>
+
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Paid</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {%for item in order.items.all %}
+                                        {%if item.vendor == request.user.vendor %}
+
+                                        <tr>
+                                            <td>{{item.product.title}}</td>
+                                            <td>{{item.product.price}}</td>
+                                            <td>{{item.quantity}}</td>
+                                            <td>{{item.vendor_paid|yesno:"Yes,No"}}</td>
+                                            <td>${{item.get_total_price}}</td>
+                                        </tr>
+                                        {%endif%}
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+
                     
-                    {%endfor%}
-                    {%endif%}
+                    </div>
+                   
+
+
+
+                    <!-- </div> -->
                 </div>
-            <!-- </div> -->
+
+                <!-- </div> -->
+
+                <!-- <div class="col-md-8">
+        <h4>this is where the table is </h4>
+    </div> -->
+                {%endfor%}
+                {%endif%}
+            </div>
         </div>
+
     </div>
+
+
+
 </div>
 
 {%endblock%}
