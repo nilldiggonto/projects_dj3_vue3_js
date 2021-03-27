@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('social/',include('social_project.social_app.urls')),
     path('eco/',include('ecommerce_project.ecommerce_app.urls')),
+    path('time/',include('time_track_project.time_track.urls'),)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

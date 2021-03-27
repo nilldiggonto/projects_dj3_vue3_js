@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'ecommerce_project.eco_product',
     'ecommerce_project.eco_cart',
     'ecommerce_project.eco_order',
+
+    #time track
+    'time_track_project.time_track',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
