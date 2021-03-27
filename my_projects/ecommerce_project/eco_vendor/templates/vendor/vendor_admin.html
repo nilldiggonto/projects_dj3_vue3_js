@@ -18,8 +18,12 @@
                     <a href="{%url 'eco-add-product' %}" class="btn btn-block btn-sm btn-primary">Add a product</a>
                 </div>
                 <div class="card-footer">
+                    <h4><strong>{{vendor.name}}</strong></h4>
                     <strong>My Balance:</strong> ${{vendor.get_balance}} <br>
                     <strong>My Paid amount:</strong> ${{vendor.get_paid_amount}} <br>
+
+                    <hr>
+                    <a href="{%url 'eco-edit-vendor' %}" class="btn btn-block btn-sm btn-primary">EDIT</a>
 
                 </div>
             </div>
