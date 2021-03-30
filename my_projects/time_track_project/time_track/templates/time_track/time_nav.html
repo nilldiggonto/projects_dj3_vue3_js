@@ -29,3 +29,13 @@
     
     </ul>
   </nav>
+
+  {%if messages %}
+
+  {% for message in messages %}
+
+    <p class="alert alert-success notification is-toast">{{message}}</p>
+
+  {%endfor%}
+
+  {% endif %}

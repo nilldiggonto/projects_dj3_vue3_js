@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,8 +13,39 @@
     <!-- link:css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
 
-    {%block style%}  {%endblock style%}
+    {%block style%} {%endblock style%}
+
+    
+    <style>
+        @keyframes show-toast {
+            0% {
+                bottom: -100%;
+            }
+
+            20% {
+                bottom: 50px;
+            }
+
+            80% {
+                bottom: 50px;
+            }
+
+            100% {
+                bottom: -100%;
+            }
+        }
+
+        .notification.is-toast {
+            position: fixed;
+            bottom: 100%;
+            right: 20px;
+            animation-name: show-toast;
+            animation-duration: 4s;
+            z-index: 100;
+        }
+    </style>
 </head>
+
 <body>
 
 
@@ -36,6 +68,7 @@
     {%block script %}
 
     {%endblock script%}
-    
+
 </body>
+
 </html>
