@@ -1,0 +1,55 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| Account {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{%url 'time-account' %}">Account</a></li>
+    <li class="breadcrumb-item active">Edit Account</li>
+  </ol>
+  <hr>
+
+  <div class="container">
+      <div class="row d-flex justify-content-center">
+          <div class="col-md-6">
+              <div class="card">
+                  <div class="card-header">
+                    <h4>EDIT PROFILE</h4>
+                  </div>
+                  <div class="card-body">
+                      <form action="" method="post">
+                          {%csrf_token%}
+                          <div class="form-group">
+                            <label for="fname">First Name:</label>
+                            <input name="first_name" type="text" class="form-control" placeholder="Enter firstname" id="first_name" {%if user.first_name%}value="{{user.first_name}}"{%endif%}>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="lname">Last Name:</label>
+                            <input name="last_name" type="text" class="form-control" placeholder="Enter lastname" id="last_name" {%if user.last_name%}value="{{user.last_name}}"{%endif%}>
+                          </div>
+
+                          <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input name="email" type="text" class="form-control" placeholder="Enter email" id="email" {%if user.email%}value="{{user.email}}"{%endif%}>
+                          </div>
+
+
+
+                          <button type="submit" class="btn btn-primary">save change</button>
+                      </form>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </div>
+
+
+{%endblock%}

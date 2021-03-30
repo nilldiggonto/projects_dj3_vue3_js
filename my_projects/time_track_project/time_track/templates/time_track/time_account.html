@@ -1,6 +1,6 @@
 {%extends 'base/base.html'%}
 {% load crispy_forms_tags %}
-{%block title %}Time| Homepage {%endblock title%}
+{%block title %}Time| Account {%endblock title%}
 {%block favicon %}
 <link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
 {%endblock favicon%}
@@ -31,6 +31,7 @@
                     <h5>Profile Name:{% firstof user.get_full_name user.username %}</h5>
                     <h5>Email Address:{{user.email}}</h5>
                     <hr>
+                    <a href="{% url 'time-edit-account' %}" class="btn btn-sm btn-info">Edit Profile</a>
                     
                 </div>
             </div>
