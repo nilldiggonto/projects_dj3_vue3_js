@@ -49,6 +49,8 @@ INSTALLED_APPS = [
 
     #time track
     'time_track_project.time_track',
+    'time_track_project.time_profile',
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
