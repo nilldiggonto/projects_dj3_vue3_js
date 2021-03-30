@@ -1,23 +1,76 @@
 {% extends 'base/base.html' %}
 {% load crispy_forms_tags %}
-{%block title %} Social Signup {%endblock title%}
+{%block title %} SIGN UP {%endblock title%}
 
 
 
 {%block content %}
-{%include 'social_app/social_nav.html' %}
+<!-- include 'social_app/social_nav.html' %} -->
 <!-- <h4>signup Page </h4> -->
+<h4 class="p-2 bg-dark text-light text-center">SIGNUP TO VIEW ALL PROJECTS</h4>
 <div class="container-fluid">
     <div class="row d-flex justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="card border border-primary">
                 <div class="card-header text-center bg-dark text-white">
                     <h5>SIGN UP PAGE</h5>
                 </div>
-                <div class="card-body">
-                    <form action="" method="POST" class="form">
+                <div class="card-body" id="signup-app">
+                    <form action="" method="POST" class="form" novalidate v-on:submit="validateForm">
                         {% csrf_token %}
-                        {{form|crispy}}
+                        {%if form.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors}}
+                            {%for field in form %}
+                            {%if field.errors %}{{field.label}}:{{field.error|striptags}}{%endif%}
+                            {%endfor%}
+                        </div>
+                        {%endif%}
+
+                        <div class="alert alert-danger" v-if="errors.length">
+                            <strong v-for="error in errors">
+                                [[error]]
+                                <br>
+                            </strong>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="uname">Email:</label>
+                            <input type="email" class="form-control" id="id_username" placeholder="Enter Email"
+                                name="username" v-model="username" >
+                            <!-- <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div> -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="uname">Password:</label>
+                            <input type="password" class="form-control" id="id_password1" placeholder="Enter password"
+                                name="password1" v-model="password1">
+                            <!-- <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div> -->
+                        </div>
+
+                        <div class="form-group">
+                            <label for="uname">Confirm Password:</label>
+                            <input type="password" class="form-control" id="id_password2" placeholder="Enter password"
+                                name="password2" v-model="password2">
+                            <!-- <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div> -->
+                            <div>
+                                <strong v-if="password1.length <8" class="text-danger">
+                                    Password must contain at least 8 characters
+                                </strong>
+                                <br>
+
+                                <strong v-if="!isNaN(password1)" class="text-danger">
+                                    Password Can't be entirely numeric
+                                </strong>
+                            </div>
+                        </div>
+
+
+                        <!-- {{form|crispy}} -->
                         <button class="btn btn-sm btn-success btn-block" type="submit">Sign UP</button>
                         <!-- <input type="submit" name="" id=""> -->
                     </form>
@@ -29,3 +82,57 @@
 {%endblock %}
 
 
+{%block script %}
+<script>
+    const SignupApp = {
+        data() {
+            return {
+                username: '',
+                password1: '',
+                password2: '',
+                errors: []
+            }
+        },
+        delimiters: ['[[', ']]'],
+        methods: {
+            validateForm(e){
+                this.errors = []
+
+                if (!this.validateEmail(this.username)){
+                    this.errors.push('Email Address is not valid')
+                }
+
+                if(this.password1 ===''){
+                    this.errors.push('Password is missing')
+                }
+                if(this.password1.length<8){
+                    this.errors.push('Password should be 8 character')
+                }
+                if(!isNaN(this.password1)){
+                    this.errors.push('Password can\'t be only numeric')
+                }
+                if(this.password1 !== this.password2){
+                    this.errors.push('Password does not match')
+                }
+
+                if(this.errors.length){
+                    e.preventDefault()
+                    return false
+                }else{
+                    return true
+                }
+            },
+            validateEmail(email) {
+                if (/^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/.test(email)) {
+                    return true
+                }
+                return false
+            
+        }
+    }
+
+    }
+    Vue.createApp(SignupApp).mount('#signup-app')
+</script>
+
+{%endblock script%}

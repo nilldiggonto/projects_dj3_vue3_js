@@ -6,4 +6,4 @@ class UserProfile(models.Model):
     active_team_id = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(user.username)
+        return str(self.user.username)
