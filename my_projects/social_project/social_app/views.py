@@ -22,7 +22,7 @@ def signupView(request):
             userprofile = UserProfile.objects.create(user=user)
             login(request,user)
 
-            return redirect('social-home')
+            return redirect('homepage')
     else:
         form = UserCreationForm()
     template_name = 'social_app/signup.html'

@@ -1,0 +1,43 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| Homepage {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+    <!-- <li class="breadcrumb-item"><a href="#">Library</a></li> -->
+    <li class="breadcrumb-item active">Account</li>
+  </ol>
+
+
+  <div class="container-fluid">
+      <div class="row">
+
+
+          <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-dark text-center text-white">
+                   img
+
+                    <h5>PROFILE DETAILS</h5>
+                    <a href="" class="btn btn-sm btn-info">Edit Avatar</a>
+                </div>
+                <div class="card-body">
+                    <h5>Profile Name:{% firstof user.get_full_name user.username %}</h5>
+                    <h5>Email Address:{{user.email}}</h5>
+                    <hr>
+                    
+                </div>
+            </div>
+          </div>
+
+
+      </div>
+  </div>
+
+{%endblock%}
