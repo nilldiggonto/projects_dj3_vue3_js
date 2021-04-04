@@ -29,7 +29,7 @@
                 {%csrf_token%}
                 <div class="form-group">
                   <label for="title">Title:</label>
-                  <input type="text" class="form-control" placeholder="Enter Team Name" id="id_title" v-model="title">
+                  <input type="text" class="form-control" name="title" placeholder="Enter Team Name" id="id_title" v-model="title">
                   <!-- <span></span> -->
                   <!-- <strong class="alert"></strong> -->
                   <p  v-if="errors.length">

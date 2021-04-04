@@ -17,7 +17,7 @@ def add_team(request):
             team.members.add(request.user)
             team.save()
 
-            userProfile = request.user.UserProfile
+            userProfile = request.user.timeprofile
             userProfile.active_team_id = team.id
             userProfile.save()
             return redirect('time-account')
