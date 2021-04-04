@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     #time track
     'time_track_project.time_track',
     'time_track_project.time_profile',
+    'time_track_project.time_team',
 
 ]
 

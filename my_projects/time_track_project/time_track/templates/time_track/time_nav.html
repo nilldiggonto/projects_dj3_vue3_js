@@ -10,7 +10,7 @@
 
       {% if  request.user.is_authenticated%}
       <li class="nav-item">
-        <a class="nav-link" href="{%url 'time-account' %}">Account</a>
+        <a class="nav-link" href="{%url 'time-account' %}">{% firstof request.user.get_full_name request.user.username %}</a>
       </li>
 
       
