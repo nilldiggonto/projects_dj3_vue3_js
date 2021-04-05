@@ -44,3 +44,15 @@ def edit_team(request):
             return redirect('time-team-details', team_id=team.id)
     return render(request,template_name,{'team':team})
 
+
+@login_required
+def activate_team(request,team_id):
+    team = get_object_or_404(Team,pk=team_id,status=Team.ACTIVE,members__in=[request.user])
+    timeprofile = request.user.timeprofile
+    timeprofile.active_team_id = team.id
+    timeprofile.save()
+    messages.info(request,'Team Activated')
+    return redirect('time-account')
+
+
+
