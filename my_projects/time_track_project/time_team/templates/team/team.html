@@ -28,6 +28,11 @@
                         <p>{{member.username}}</p>
                       {%endfor%}
                   </div>
+                  <div class="card-footer">
+                      {%if team.created_by == request.user %}
+                      <a href="{% url 'time-edit-team' %}" class="btn btn-info btn-sm">EDIT</a>
+                      {% endif%}
+                  </div>
               </div>
           </div>
       </div>

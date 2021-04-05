@@ -1,0 +1,87 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| Homepage {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{%url 'time-account' %}">Account</a></li>
+
+    <!-- <li class="breadcrumb-item"><a href="#">Library</a></li> -->
+    <li class="breadcrumb-item active">Edit Team</li>
+  </ol>
+
+  <div class="container">
+      <h4 class="text-center p-4 bg-secondary">
+          ADD A NEW TEAM
+      </h4>
+  </div>
+
+  <div class="container" id="team-app">
+      <div class="card">
+          <div class="card-header">
+            <form method="POST" @submit="validateForm">
+                {%csrf_token%}
+                <div class="form-group">
+                  <label for="title">Title:</label>
+                  <input type="text" class="form-control" name="title" placeholder="Enter Team Name" id="id_title" v-model="title">
+                  <!-- <span></span> -->
+                  <!-- <strong class="alert"></strong> -->
+                  <p  v-if="errors.length">
+                    <strong class="badge badge-danger" v-for="error in errors">[[error]]</strong>
+                  </p>
+                </div>
+
+               
+
+                <!-- <div class="form-group">
+                  <label for="pwd">Password:</label>
+                  <input type="password" class="form-control" placeholder="Enter password" id="pwd">
+                </div>
+                <div class="form-group form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox"> Remember me
+                  </label>
+                </div> -->
+                <button type="submit" class="btn btn-success btn-sm">Save Changes</button>
+              </form>
+          </div>
+      </div>
+  </div>
+
+
+{%endblock%}
+
+
+{%block script %}
+  <script>
+      const teamApp = {
+          data(){
+              return {
+                  title:'{{team.title}}',
+                  errors:[]
+              }
+          },
+          delimiters: ['[[',']]'],
+          methods:{
+              validateForm(e){
+                  this.errors = []
+                  if(this.title){
+                      return true
+                  }
+                  e.preventDefault()
+                  this.errors.push('The title field is empty')
+                  return false
+              }
+          }
+
+          
+      }
+      Vue.createApp(teamApp).mount('#team-app')
+  </script>
+{%endblock script%}
