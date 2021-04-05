@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 
 # Create your views here.
 from .models import Team
@@ -22,4 +22,10 @@ def add_team(request):
             userProfile.save()
             return redirect('time-account')
     return render(request,template_name)
+
+@login_required
+def team(request,team_id):
+    team = get_object_or_404(Team,pk=team_id,status=Team.ACTIVE,members__in=[request.user])
+    tempalte_name ='team/team.html'
+    return render(request,'team/team.html',{'team':team})
 

@@ -9,66 +9,106 @@
 {%block content%}
 {%include 'time_track/time_nav.html'%}
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
-    <!-- <li class="breadcrumb-item"><a href="#">Library</a></li> -->
-    <li class="breadcrumb-item active">Account</li>
-  </ol>
+  <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+  <!-- <li class="breadcrumb-item"><a href="#">Library</a></li> -->
+  <li class="breadcrumb-item active">Account</li>
+</ol>
 
 
-  <div class="container-fluid">
-      <div class="row">
+<div class="container-fluid">
+  <div class="row">
 
 
-          <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-dark text-center text-white">
-                   img
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header bg-dark text-center text-white">
+          img
 
-                    <h5>PROFILE DETAILS</h5>
-                    <a href="" class="btn btn-sm btn-info">Edit Avatar</a>
-                </div>
-                <div class="card-body">
-                    <h5>Profile Name:{% firstof user.get_full_name user.username %}</h5>
-                    <h5>Email Address:{{user.email}}</h5>
-                    <hr>
-                    <a href="{% url 'time-edit-account' %}" class="btn btn-sm btn-info">Edit Profile</a>
-                    <a href="{% url 'time-add-team' %}" class="btn btn-sm btn-success">Add Team</a>
-                    
-                </div>
+          <h5>PROFILE DETAILS</h5>
+          <a href="" class="btn btn-sm btn-info">Edit Avatar</a>
+        </div>
+        <div class="card-body">
+          <h5>Profile Name:{% firstof user.get_full_name user.username %}</h5>
+          <h5>Email Address:{{user.email}}</h5>
+          <hr>
+          <a href="{% url 'time-edit-account' %}" class="btn btn-sm btn-info">Edit Profile</a>
+          <a href="{% url 'time-add-team' %}" class="btn btn-sm btn-success">Add Team</a>
 
-      
-                
-            </div>
+        </div>
 
-            <div class="card mt-2">
-                <div class="card-header text-center bg-dark text-light">
-                   Team list
-                </div>
-                <div class="card-body">
-                    <ul class="list-group">
-                        {%for team in teams %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                          {{team.title}}
-                          <span class="badge badge-primary badge-pill">{%if team.created_by == request.user %}owner{%else%}number{%endif%}</span>
-                         
-              
-                        </li>
-                                    <!-- <br> -->
-                                    <strong class="badge badge-warning mb-1">Plan Show</strong>
-                                  <div class="text-center mb-2">
-                                    <a href="" class="btn btn-success btn-sm">details</a>
-                                    <a href="" class="btn btn-info btn-sm  ">activate</a>
-                                  </div>
-                        {%endfor%}
-                      </ul>
-
-                    
-                </div>
-            </div>
-          </div>
 
 
       </div>
+
+    </div>
+
+    <div class="col-md-8">
+      <div class="row">
+
+        {%if active_team %}
+        <div class="col-4">
+          <div class="card">
+            <div class="card-header bg-success text-light">
+              {{active_team.title}}
+            </div>
+            <div class="card-body">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  {{active_team.title}}
+                  <span class="badge badge-primary badge-pill">{%if active_team.created_by == request.user%}owner{%else%}number{%endif%}</span>
+
+
+                </li>
+                <!-- <br> -->
+                <strong class="badge badge-warning mb-1">Plan Show</strong>
+                <div class="text-center mb-2">
+                  <a href="{% url 'time-team-details' active_team.id %}" class="btn btn-success btn-sm">details</a>
+                  <a href="" class="btn btn-info btn-sm  ">activate</a>
+                  {% if active_team.created_by == request.user %}
+                  <a href="" class="btn btn-info btn-sm  ">Invite User</a>
+
+                  {%endif%}
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {%endif%}
+
+        {%for team in teams %}
+        <div class="col-4">
+          <div class="card">
+            <div class="card-header">
+              {{team.title}}
+            </div>
+            <div class="card-body">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                  <span class="badge badge-primary badge-pill">{%if team.created_by == request.user%}owner{%else%}number{%endif%}</span>
+
+
+                </li>
+                <!-- <br> -->
+                <strong class="badge badge-warning mb-1">Plan Show</strong>
+                <div class="text-center mb-2">
+                  <a href="{% url 'time-team-details' team.id %}" class="btn btn-success btn-sm">details</a>
+                  <a href="" class="btn btn-info btn-sm  ">activate</a>
+                  {% if active_team.created_by == request.user %}
+                  <a href="" class="btn btn-info btn-sm  ">Invite User</a>
+
+                  {%endif%}
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {% endfor%}
+      </div>
+    </div>
+
+
   </div>
+</div>
 
 {%endblock%}

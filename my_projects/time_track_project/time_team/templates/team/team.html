@@ -1,0 +1,35 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| Account {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{%url 'time-account' %}">Account</a></li>
+    <!-- <li class="breadcrumb-item"><a href="#">{{team.title}}</a></li> -->
+
+    <li class="breadcrumb-item active">{{team.title}}</li>
+  </ol>
+
+  <div class="container">
+      <div class="row">
+          <div class="col-md-4">
+              <div class="card">
+                  <div class="card-header">
+                      LIST MEMBER
+                  </div>
+                  <div class="card-body">
+                      {% for member in team.members.all %}
+                        <p>{{member.username}}</p>
+                      {%endfor%}
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+{%endblock%}
