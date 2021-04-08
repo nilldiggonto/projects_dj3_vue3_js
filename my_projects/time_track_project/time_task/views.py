@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import ProjectTask
+from .models import ProjectTask,TaskPrimary
 
 from time_track_project.time_team.models import Team
 # Create your views here.
@@ -19,9 +19,10 @@ def time_projects(request):
 
         if title:
             project = ProjectTask.objects.create(team=team,title=title,created_by=request.user)
-            messages.info(request,'Task Created')
+            messages.info(request,'Project Created')
 
             return redirect('time-projects-list')
+    
 
     return render(request,template_name,{'team':team,'projects':projects})
     
@@ -32,9 +33,21 @@ def time_projectDetail(request,project_id):
     project = get_object_or_404(ProjectTask,team=team,pk=project_id)
 
     template_name = 'project/project_detail.html'
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        if title:
+            task = TaskPrimary.objects.create(team=team,project=project,title=title,created_by=request.user)
+            messages.info(request,'Task Created')
+            return redirect('time-project-detail', project_id=project.id)
+
+    tasks_todo = project.tasks.filter(status=TaskPrimary.TODO)
+    tasks_done = project.tasks.filter(status=TaskPrimary.DONE)
     context = {
         'team':team,
-        'project':project
+        'project':project,
+        'tasks_todo':tasks_todo,
+        'tasks_done':tasks_done
     }
     return render(request,template_name,context)
 
@@ -53,7 +66,7 @@ def time_projectEdit(request,project_id):
         if title:
             project.title= title
             project.save()
-            messages.info(request,'Task updated')
+            messages.info(request,'Project updated')
             return redirect('time-project-detail', project_id=project.id)
     context = {
         'team':team,
