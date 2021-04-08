@@ -19,6 +19,7 @@ def time_projects(request):
 
         if title:
             project = ProjectTask.objects.create(team=team,title=title,created_by=request.user)
+            messages.info(request,'Task Created')
 
             return redirect('time-projects-list')
 
@@ -36,3 +37,29 @@ def time_projectDetail(request,project_id):
         'project':project
     }
     return render(request,template_name,context)
+
+
+#eidt
+@login_required
+def time_projectEdit(request,project_id):
+    team = get_object_or_404(Team,pk=request.user.timeprofile.active_team_id,status=Team.ACTIVE)
+    project = get_object_or_404(ProjectTask,team=team,pk=project_id)
+
+    template_name = 'project/project_edit.html'
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+
+        if title:
+            project.title= title
+            project.save()
+            messages.info(request,'Task updated')
+            return redirect('time-project-detail', project_id=project.id)
+    context = {
+        'team':team,
+        'project':project
+    }
+    return render(request,template_name,context)
+    
+
+
