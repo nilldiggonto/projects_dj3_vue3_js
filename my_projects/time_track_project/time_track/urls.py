@@ -8,4 +8,6 @@ urlpatterns = [
     path('edit/time-account/',time_edit_profile,name='time-edit-account'),
 
     path('team/',include('time_track_project.time_team.urls')),
+    path('projects/',include('time_track_project.time_task.urls')),
+
 ]

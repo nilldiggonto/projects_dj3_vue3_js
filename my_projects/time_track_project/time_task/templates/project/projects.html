@@ -1,0 +1,19 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| All Project List {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="#">Projects</a></li>
+  <li class="breadcrumb-item active">single project</li>
+</ol>
+
+
+
+{%endblock%}
