@@ -1,0 +1,37 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| {{task.title}} {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-projects-list' %}">Projects</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-project-detail' project.id %}">{{project.title}}</a></li>
+  
+
+  <li class="breadcrumb-item active">{{task.title}}</li>
+</ol>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{task.title}}
+                </div>
+                <div class="card-footer">
+                    <a href="{%url 'time-task-edit' project.id task.id%}" class="btn btn-warning">EDIT</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}

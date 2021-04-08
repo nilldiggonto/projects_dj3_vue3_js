@@ -73,6 +73,58 @@ def time_projectEdit(request,project_id):
         'project':project
     }
     return render(request,template_name,context)
+
+
+@login_required
+def task_detail(request,project_id,task_id):
+    team = get_object_or_404(Team,pk=request.user.timeprofile.active_team_id,status=Team.ACTIVE)
+    project = get_object_or_404(ProjectTask,team=team,pk=project_id)
+    task = get_object_or_404(TaskPrimary,pk=task_id,team=team)
+    # tempalte_nam
+    template_name='project/task_detail.html'
+
+    context = {
+        'team':team,
+        'project':project,
+        'task':task
+        # 'tasks_todo':tasks_todo,
+        # 'tasks_done':tasks_done
+    }
+
+
+    return render(request,template_name,context)
+
+
+@login_required
+def task_edit(request,project_id,task_id):
+    team = get_object_or_404(Team,pk=request.user.timeprofile.active_team_id,status=Team.ACTIVE)
+    project = get_object_or_404(ProjectTask,team=team,pk=project_id)
+    task = get_object_or_404(TaskPrimary,pk=task_id,team=team)
+    # tempalte_nam
+    template_name='project/task_edit.html'
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+
+        if title:
+            task.title = title
+            task.save()
+            messages.info(request,'Task Updated')
+            return redirect('time-task-detail',project_id = project.id, task_id= task.id)
+
+    context = {
+        'team':team,
+        'project':project,
+        'task':task
+        # 'tasks_todo':tasks_todo,
+        # 'tasks_done':tasks_done
+    }
+
+    
+
+
+    return render(request,template_name,context)
+
     
 
 

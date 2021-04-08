@@ -1,0 +1,46 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| {{task.title}}|Edit {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-projects-list' %}">Projects</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-project-detail' project.id %}">{{project.title}}</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-task-detail' project.id task.id%}">{{task.title}}</a></li>
+
+
+  <li class="breadcrumb-item active">Edit</li>
+</ol>
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    {{task.title}}
+                </div>
+                <div class="card-body">
+                    <form action="#" method="POST" @submit="validateForm">
+                        {%csrf_token%}
+                        <div class="form-group">
+                          <label for="email">Title:</label>
+                          <input type="text" class="form-control" placeholder="Enter Title" id="title" v-model="title" name="title" value="{{task.title}}">
+                          <!-- <span v-if="showError" class="badge badge-danger">Title field is missing</span> -->
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
