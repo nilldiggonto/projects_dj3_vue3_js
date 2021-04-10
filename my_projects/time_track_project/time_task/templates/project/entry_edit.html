@@ -1,0 +1,68 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time|Edit|Entry {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-projects-list' %}">Projects</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-project-detail' project.id %}">{{project.title}}</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-task-detail' project.id  task.id%}">{{task.title}}</a></li>
+
+
+  <li class="breadcrumb-item active">edit activity</li>
+</ol>
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    {{task.title}}|Edit Activity
+                </div>
+                <div class="card-body">
+                    <form class="form-inline" action="#" method="POST">
+                        {%csrf_token%}
+
+                        <select class="form-control mb-2 mr-sm-2" id="sel1" name="hours">
+                            <option value="0"{%if hours == 0 %} selected {%endif%}>0H</option>
+                            {%for i in "x"|rjust:"10"%}
+                            <option value="{{forloop.counter}}" {%if hours == forloop.counter %} selected {%endif%}>{{forloop.counter}}H</option>
+
+                            {%endfor%}
+                            <!-- <option>2</option>
+                            <option>3</option>
+                            <option>4</option> -->
+                          </select>
+                          <select class="form-control mb-2 mr-sm-2" id="sel1" name="minutes">
+                            <option value="0" {%if minutes == 0 %} selected {%endif%}>0m</option>
+                            {%for i in "x"|rjust:"59"%}
+                            <option value="{{forloop.counter}}" {%if minutes == forloop.counter %} selected {%endif%}>{{forloop.counter}}m</option>
+
+                            {%endfor%}
+                            <!-- <option>2</option>
+                            <option>3</option>
+                            <option>4</option> -->
+                          </select>
+                        <!-- <label for="email" class="mr-sm-2">Email address:</label> -->
+                        <!-- <input type="email" class="form-control mb-2 mr-sm-2" placeholder="Enter email" id="email"> -->
+                        <!-- <label for="pwd" class="mr-sm-2">Password:</label> -->
+                        <input type="date" name="date" id="id_date" class="form-control mb-2 mr-sm-2" placeholder="" value="{{entry.created_at|date:'Y-m-d'}}">
+                      
+                        <button type="submit" class="btn btn-primary mb-2">Update</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}
