@@ -105,9 +105,11 @@ def task_edit(request,project_id,task_id):
 
     if request.method == 'POST':
         title = request.POST.get('title')
+        status = request.POST.get('status')
 
         if title:
             task.title = title
+            task.status = status
             task.save()
             messages.info(request,'Task Updated')
             return redirect('time-task-detail',project_id = project.id, task_id= task.id)

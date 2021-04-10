@@ -23,7 +23,7 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    {{task.title}}
+                    {{task.title}} <span class="badge badge-info">{{task.get_status_display}}</span>
                 </div>
                 <div class="card-footer">
                     <a href="{%url 'time-task-edit' project.id task.id%}" class="btn btn-warning">EDIT</a>
