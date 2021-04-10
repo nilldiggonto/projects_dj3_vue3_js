@@ -18,8 +18,12 @@ class ProjectTask(models.Model):
         return self.title
 
     def registered_time(self):
-        return 0
-
+        # minutes = 0
+        # entries = self.entries.all()
+        # for entry in entries:
+        #     minutes = minutes + entry.minutes
+        # return minutes
+        return sum(entry.minutes for entry in self.entries.all())
     def num_tasks_todo(self):
         return self.tasks.filter(status=TaskPrimary.TODO).count()
 
@@ -49,7 +53,8 @@ class TaskPrimary(models.Model):
         return self.title
 
     def registered_time(self):
-        return 0
+        return sum(entry.minutes for entry in self.entries.all())
+
 
 
 
@@ -62,7 +67,7 @@ class Entry(models.Model):
     minutes     = models.IntegerField(default=0)
     is_track    = models.BooleanField(default=False)
     created_by  = models.ForeignKey(User,related_name='entries',on_delete=models.CASCADE)
-    created_at  = models.DateTimeField(auto_now_add=True)
+    created_at  = models.DateTimeField()
 
     class Meta:
         ordering = ['-created_at']

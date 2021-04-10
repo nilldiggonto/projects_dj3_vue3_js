@@ -1,7 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import ProjectTask,TaskPrimary
+from .models import ProjectTask,TaskPrimary,Entry
+from datetime import datetime
+# import datetime
 
 from time_track_project.time_team.models import Team
 # Create your views here.
@@ -83,10 +85,18 @@ def task_detail(request,project_id,task_id):
     # tempalte_nam
     template_name='project/task_detail.html'
 
+    if request.method == 'POST':
+        hours = int(request.POST.get('hours',0))
+        minutes = int(request.POST.get('minutes',0))
+        date = '%s %s' % (request.POST.get('date'), datetime.now().time())
+        minutes_total = (hours*60) + minutes
+        entry = Entry.objects.create(team=team,project=project,task=task,minutes=minutes_total,created_by = request.user, created_at =date)
+        messages.info(request,'Time Added')
     context = {
         'team':team,
         'project':project,
-        'task':task
+        'task':task,
+        'today':datetime.today()
         # 'tasks_todo':tasks_todo,
         # 'tasks_done':tasks_done
     }
