@@ -21,7 +21,7 @@ class ProjectTask(models.Model):
         return 0
 
     def num_tasks_todo(self):
-        return 0
+        return self.tasks.filter(status=TaskPrimary.TODO).count()
 
 
 class TaskPrimary(models.Model):
@@ -51,4 +51,24 @@ class TaskPrimary(models.Model):
     def registered_time(self):
         return 0
 
+
+
+
+#time track
+class Entry(models.Model):
+    team        = models.ForeignKey(Team,related_name='entries',on_delete=models.CASCADE)
+    project     = models.ForeignKey(ProjectTask,related_name='entries', on_delete=models.CASCADE)
+    task        = models.ForeignKey(TaskPrimary,related_name='entries', on_delete=models.CASCADE)
+    minutes     = models.IntegerField(default=0)
+    is_track    = models.BooleanField(default=False)
+    created_by  = models.ForeignKey(User,related_name='entries',on_delete=models.CASCADE)
+    created_at  = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        if self.task:
+            return '%s - %s' % (self.task.title,self.created_at)
+        return '%' % self.created_at
 
