@@ -44,7 +44,10 @@ def timeDashboard(request):
     for member in members:
         member.time_for_user_and_team_and_month = get_time_for_user_and_team_month(team,member,team_month)
 
+        print(member.time_for_user_and_team_and_month)
+
     context = {
+        'projects':all_projects[0:4],
         'team':team,
         'all_projects':all_projects,
         'date_entries':date_entries,

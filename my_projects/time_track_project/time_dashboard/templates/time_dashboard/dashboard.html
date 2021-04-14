@@ -1,5 +1,8 @@
 {%extends 'base/base.html'%}
 {% load crispy_forms_tags %}
+
+{%load dashboardextras %}
+
 {%block title %}Time|Dashboard {%endblock title%}
 {%block favicon %}
 <link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
@@ -45,7 +48,7 @@
                                 <tr>
                                     <td>{{entry.task.title}}</td>
                                     <td>{{entry.project.title}}</td>
-                                    <td>{{entry.minutes}}</td>
+                                    <td>{{entry.minutes | format_minutes}}</td>
                                 </tr>
                                 {% endfor%}
                             </tbody>
@@ -107,7 +110,7 @@
                                 <tr>
                                     <!-- <td>{{entry.task.title}}</td> -->
                                     <td>{{project.title}}</td>
-                                    <td>{{project.time_for_user_and_project_and_month}}</td>
+                                    <td>{{project.time_for_user_and_project_and_month | format_minutes}}</td>
                                 </tr>
                                 {%endif%}
                                 {% endfor%}
@@ -175,7 +178,7 @@
                                         </td>
 
                                         <td>
-                                            {{memeber.time_for_user_and_team_and_month}}
+                                            {{member.time_for_user_and_team_and_month | format_minutes  }}
                                         </td>
                                     </tr>
                                 {% endfor%}
@@ -198,6 +201,39 @@
         </div>
 
         {%endif%}
+    </div>
+
+    <hr>
+    <h4 class="p-3 text-center bg-dark text-white">
+        RECENT PROJECTS
+    </h4>
+    <div class="row">
+        
+        {% for project in projects %}
+
+        <div class="col-md-3 mb-2">
+            <div class="card">
+                <div class="card-header">
+                    {{project.title}}
+
+                    <p>Registerd Time: {{project.registered_time | format_minutes}}</p>
+
+                    <p>Total Tasks: {{project.num_tasks_todo}}</p>
+                </div>
+
+                <div class="card-footer">
+                    <a href="{%url 'time-project-detail' project.id %}">Details</a>
+                </div>
+            </div>
+        </div>
+
+        {%empty%}
+
+        <div class="col">
+            <p>NO projects yet</p>
+        </div>
+
+        {%endfor%}
     </div>
 </div>
 
