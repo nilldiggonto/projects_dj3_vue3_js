@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'time_track_project.time_profile',
     'time_track_project.time_team',
     'time_track_project.time_task',
+    'time_track_project.time_dashboard',
 
 
 ]
