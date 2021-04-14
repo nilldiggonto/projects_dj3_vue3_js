@@ -138,6 +138,66 @@
 
             </div>
         </div>
+
+
+
+        <!---team-->
+        {% if request.user == team.created_by %}
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>TEAM</h4>
+
+                    <p><b>TEAM MONTH:</b>
+                        {%if team_num_months is 0 %}Current Month {%else %}{{team_month|date:"Y-m"}} {%endif%}
+                    </p>
+                </div>
+
+                <div class="card-body">
+                        {% if time_for_team_and_month > 0 %}
+
+                        <table class="table table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>NAME</th>
+                                    <th>TIME</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for member in members %}
+
+                                    <tr>
+                                        <td>
+                                            {% firstof member.get_full_name member.uername %}
+                                        </td>
+
+                                        <td>
+                                            {{memeber.time_for_user_and_team_and_month}}
+                                        </td>
+                                    </tr>
+                                {% endfor%}
+                            </tbody>
+
+                        </table>
+
+                        {%else%}
+
+                        <hr>No Team record found
+
+                        {%endif%}
+
+                    <a href="?team_num_months={{team_num_months|add:'1'}}" class="btn btn-sm btn-info">Previous</a>
+                    {%if team_num_months > 0 %}
+                    <a href="?team_num_months={{team_num_months|add:'-1'}}" class="btn btn-sm btn-success">Next</a>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+
+        {%endif%}
     </div>
 </div>
 
