@@ -1,1 +1,83 @@
-<h4>dashboard</h4>
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time|Dashboard {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+
+
+
+    <li class="breadcrumb-item active">Dashboard</li>
+</ol>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>ME</h4>
+                    <p><b>TIME:</b> {%if num_days is 0 %}Today{%else%}{{date_user|date:"Y-m-d"}}{%endif%}</p>
+
+
+                </div>
+
+                <div class="card-body">
+                    {%if date_entries %}
+                    <!-- <div class="card-header"> -->
+
+                        <table class="table table-hover">
+                            <thead class="bg-dark text-light">
+                                <tr>
+                                    <td>Task</td>
+                                    <td>Project</td>
+                                    <td>Time</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for entry in date_entries%}
+                                <tr>
+                                    <td>{{entry.task.title}}</td>
+                                    <td>{{entry.project.title}}</td>
+                                    <td>{{entry.minutes}}</td>
+                                </tr>
+                                {% endfor%}
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">Total</td>
+                                    <td>{{time_for_user_and_date}}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+
+                    {%else%}
+
+                        <p>No Entry Today</p>
+
+
+                    <!-- </div> -->
+                    {%endif%}
+
+                    <a href="?num_days={{num_days|add:'1'}}" class="btn btn-sm btn-info">Previous</a>
+                    {%if num_days > 0 %}
+                    <a href="?num_days={{num_days|add:'-1'}}" class="btn btn-sm btn-success">Next</a>
+                    {%endif%}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock%}
