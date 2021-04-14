@@ -9,5 +9,6 @@ urlpatterns = [
 
     path('team/',include('time_track_project.time_team.urls')),
     path('projects/',include('time_track_project.time_task.urls')),
+    path('dashboard/',include('time_track_project.time_dashboard.urls')),
 
 ]
