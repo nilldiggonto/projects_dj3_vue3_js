@@ -153,3 +153,16 @@ STATIC_ROOT = Path(BASE_DIR,'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+## CREATING A EMAIL HOST
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_PORT =587
+# EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = 'testnilldiggonto@gmail.com'
+EMAIL_HOST_PASSWORD = 'test!@#$'
+DEFAULT_EMAIL_FROM = 'Time <testnilldiggonto@gmail.com>'
+# ACCEPTION_URL  = ''

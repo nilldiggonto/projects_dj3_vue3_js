@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib import messages
 # Create your views here.
-from .models import Team
+from .models import Team,Invitation
 from django.contrib.auth.decorators import login_required
 
+import random
 #
 #add view
 @login_required
@@ -56,3 +57,16 @@ def activate_team(request,team_id):
 
 
 
+@login_required
+def inviteView(request):
+    team = get_object_or_404(Team,pk=request.user.timeprofile.active_team_id,status=Team.ACTIVE)
+
+    if request.method == 'POST':
+        email =  request.POST.get('email')
+
+        if email:
+            invitations = Invitation.objects.filter(team=team,email=email)
+
+            if not invitations:
+                code = '',
+    
