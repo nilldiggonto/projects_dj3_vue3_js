@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from time_track_project.time_profile.models import UserProfile
+from time_track_project.time_team.models import Invitation
 
 # Create your views here.
 def social_frontpage(request):
@@ -21,6 +22,12 @@ def signupView(request):
             user.save()
             userprofile = UserProfile.objects.create(user=user)
             login(request,user)
+
+            invitations = Invitation.objects.filter(email=user.email,status=Invitation.INVITED)
+            if invitations:
+                return redirect('time-account')
+            else:
+                return redirect('time-dashboard')
 
             return redirect('homepage')
     else:

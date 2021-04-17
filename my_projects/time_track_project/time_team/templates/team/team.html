@@ -37,6 +37,19 @@
                   </div>
               </div>
           </div>
+
+          <div class="col-md-4">
+              <div class="card">
+                  <div class="card-header">
+                      Invite Users
+                  </div>
+                  <div class="card-body">
+                      {%for member in invitations%}
+                        <p>{{member.email}} - {{member.date_sent|timesince}} ago</p>
+                      {%endfor%}
+                  </div>
+              </div>
+          </div>
       </div>
   </div>
 {%endblock%}
