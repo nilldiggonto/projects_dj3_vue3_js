@@ -84,3 +84,29 @@ def inviteView(request):
                 messages.info(request,'Invitation already send')
     return render(request,'team/invite.html',{'team':team})
     
+@login_required
+def accept_invitation(request):
+    if request.method == 'POST':
+        code = request.POST.get('code')
+
+        invitations = invitations.objects.filter(code=code,email=request.user.email)
+        if invitations:
+            invitation = invitations[0]
+            invitation.status = Invitation.ACCEPTED
+            invitation.save()
+
+            team = invitation.team
+            team.members.add(request.user)
+            team.save()
+
+            userprofile = request.user.timeprofile
+            userprofile.activate_team_id = team.id
+            userprofile.save()
+            messages.info(request,'Accepted')
+
+            send_invitation_accepted(team,invitation)
+            return redirect('time-team-details',team_id = team.id)
+        else:
+            messages.info(request,'No invitation found')
+    else:
+        return render(request,'team/accept_invitation.html')

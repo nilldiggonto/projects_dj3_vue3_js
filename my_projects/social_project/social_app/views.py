@@ -25,7 +25,7 @@ def signupView(request):
 
             invitations = Invitation.objects.filter(email=user.email,status=Invitation.INVITED)
             if invitations:
-                return redirect('time-account')
+                return redirect('time-accept-invite')
             else:
                 return redirect('time-dashboard')
 
