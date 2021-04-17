@@ -5,6 +5,8 @@ from .models import Team,Invitation
 from django.contrib.auth.decorators import login_required
 
 import random
+
+from .utils import send_invitation,send_invitation_accepted
 #
 #add view
 @login_required
@@ -68,5 +70,15 @@ def inviteView(request):
             invitations = Invitation.objects.filter(team=team,email=email)
 
             if not invitations:
-                code = '',
+                code = ''.join(random.choice('abcdefghijklmnopqrstuves123456789') for i in range(4))
+                invitation = Invitation.objects.create(team=team,email=email,code=code)
+
+                messages.info(request,'The user has invitation')
+
+                send_invitation(email,code,team)
+
+                return redirect('time-team-details',team_id=team.id)
+            else:
+                messages.info(request,'Invitation already send')
+    return render(request,'team/invite.html',{'team':team})
     

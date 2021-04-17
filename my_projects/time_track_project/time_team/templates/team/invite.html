@@ -1,0 +1,89 @@
+{%extends 'base/base.html'%}
+{% load crispy_forms_tags %}
+{%block title %}Time| Invitation {%endblock title%}
+{%block favicon %}
+<link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
+{%endblock favicon%}
+
+
+{%block content%}
+{%include 'time_track/time_nav.html'%}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{%url 'time-account' %}">Account</a></li>
+    <li class="breadcrumb-item"><a href="{%url 'time-team-details' team.id %}">{{team.title}}</a></li>
+
+    <!-- <li class="breadcrumb-item"><a href="#">{{team.title}}</a></li> -->
+
+    <li class="breadcrumb-item active">Invite memeber</li>
+  </ol>
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    INVITE MEMBER
+                </div>
+                <div class="card-body" id="team-app">
+                    <form method="POST" @submit="validateForm" novalidate>
+                        {%csrf_token%}
+                        <div class="form-group">
+                          <label for="title">Email:</label>
+                          <input type="email" class="form-control" name="email" placeholder="Enter email" id="id_email" v-model="email">
+                          <!-- <span></span> -->
+                          <!-- <strong class="alert"></strong> -->
+                          <p  v-if="errors.length">
+                            <strong class="badge badge-danger" v-for="error in errors">[[error]]</strong>
+                          </p>
+                        </div>
+        
+                       
+                        <button type="submit" class="btn btn-success btn-sm">Invite</button>
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  {%endblock%}
+
+
+  
+{%block script %}
+<script>
+    const inviteApp = {
+        data(){
+            return {
+                email:'',
+                errors:[]
+            }
+        },
+        delimiters: ['[[',']]'],
+        methods:{
+            validateForm(e){
+                if(this.validateEmail(this.email)){
+                    return true
+                }
+                this.errors = ['Email is not valid']
+
+                e.preventDefault()
+                // this.errors.push('The title field is empty')
+                return false
+            },
+            validateEmail(email) {
+                if (/^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)$/.test(email)) {
+                    return true
+                }
+                return false
+            
+            }
+        }
+
+        
+    }
+    Vue.createApp(inviteApp).mount('#team-app')
+</script>
+{%endblock script%}

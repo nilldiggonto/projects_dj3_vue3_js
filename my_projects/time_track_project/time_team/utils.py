@@ -2,9 +2,9 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-def sent_invitation(to_email,code,team):
+def send_invitation(to_email,code,team):
     from_email = settings.DEFAULT_EMAIL_FROM
-    acceptation_url = 'http://localhost:8000'
+    acceptation_url = 'http://127.0.0.1:8000/time/team/invite/'
 
     subject = 'Invitation to Time'
     text_content = 'Invitation. Your token is: %s' % code

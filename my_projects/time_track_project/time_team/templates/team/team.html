@@ -31,6 +31,8 @@
                   <div class="card-footer">
                       {%if team.created_by == request.user %}
                       <a href="{% url 'time-edit-team' %}" class="btn btn-info btn-sm">EDIT</a>
+
+                      <a href="{% url 'time-team-invite' %}" class="btn btn-dark btn-sm">INVITE</a>
                       {% endif%}
                   </div>
               </div>

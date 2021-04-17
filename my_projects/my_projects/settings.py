@@ -163,6 +163,6 @@ EMAIL_PORT =587
 # EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 # EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_HOST_USER = 'testnilldiggonto@gmail.com'
-EMAIL_HOST_PASSWORD = 'test!@#$'
+EMAIL_HOST_PASSWORD = ''
 DEFAULT_EMAIL_FROM = 'Time <testnilldiggonto@gmail.com>'
 # ACCEPTION_URL  = ''
