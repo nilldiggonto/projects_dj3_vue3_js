@@ -36,6 +36,19 @@
 
         </div>
 
+        {% if invitations%}
+
+          <div class="card-footer">
+            <h4><b>INVITATION LIST</b></h4>
+
+            {%for invitation in invitations%}
+
+              <a href="{%url 'time-accept-invite' %}">Invitation for: {{invitation.team.title}}</a>
+            {%endfor%}
+          </div>
+
+        {%endif%}
+
 
 
       </div>

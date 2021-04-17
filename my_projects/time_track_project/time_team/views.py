@@ -89,8 +89,10 @@ def accept_invitation(request):
     if request.method == 'POST':
         code = request.POST.get('code')
 
-        invitations = invitations.objects.filter(code=code,email=request.user.email)
+        invitations = Invitation.objects.filter(code=code,email=request.user.email)
+
         if invitations:
+            print('ok')
             invitation = invitations[0]
             invitation.status = Invitation.ACCEPTED
             invitation.save()
@@ -107,6 +109,8 @@ def accept_invitation(request):
             send_invitation_accepted(team,invitation)
             return redirect('time-team-details',team_id = team.id)
         else:
-            messages.info(request,'No invitation found')
+            print('not ok')
+            messages.info(request,'Wrong Code')
+            return render(request,'team/accept_invitation.html')
     else:
         return render(request,'team/accept_invitation.html')

@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from time_track_project.time_team.models import Team
+from time_track_project.time_team.models import Team,Invitation
 # Create your views here.
 
 def time_frontpage(request):
@@ -15,9 +15,11 @@ def time_account(request):
     template_name = 'time_track/time_account.html'
     user = request.user
     teams = request.user.teams.exclude(pk=request.user.timeprofile.active_team_id)
+    invitations = Invitation.objects.filter(email=request.user.email,status=Invitation.INVITED)
     context = {
         'user':user,
         'teams':teams,
+        'invitations':invitations,
     }
     return render(request,template_name,context)
 

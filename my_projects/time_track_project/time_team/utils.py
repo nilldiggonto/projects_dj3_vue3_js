@@ -14,13 +14,13 @@ def send_invitation(to_email,code,team):
     msg.attach_alternative(html_content,'text/html')
     msg.send()
 
-def send_invitation_accepted(to_email,team,invitation):
+def send_invitation_accepted(team,invitation):
     from_email = settings.DEFAULT_EMAIL_FROM
     subject = 'Invitation Accepted'
     text_content = 'Congrsts its accepted'
     html_content = render_to_string('team/email_accepted.html',{'team':team,'invitation':invitation})
 
-    msg = EmailMultiAlternatives(subject,text_content,from_email,[to_email])
+    msg = EmailMultiAlternatives(subject,text_content,from_email,[team.created_by.email])
 
     msg.attach_alternative(html_content,'text/html')
     msg.send()
