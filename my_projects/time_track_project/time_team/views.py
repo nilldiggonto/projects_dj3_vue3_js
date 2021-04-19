@@ -30,9 +30,10 @@ def add_team(request):
 def team(request,team_id):
     team = get_object_or_404(Team,pk=team_id,status=Team.ACTIVE,members__in=[request.user])
     tempalte_name ='team/team.html'
+    user = request.user
 
     invitations = team.invitations.filter(status=Invitation.INVITED)
-    return render(request,'team/team.html',{'team':team,'invitations':invitations,})
+    return render(request,'team/team.html',{'team':team,'invitations':invitations,'user':user})
 
 @login_required
 def edit_team(request):

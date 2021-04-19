@@ -3,7 +3,7 @@
 
 {%load dashboardextras %}
 
-{%block title %}Time|Dashboard {%endblock title%}
+{%block title %}Time|User {%endblock title%}
 {%block favicon %}
 <link rel="shortcut icon" href="https://pngimg.com/uploads/alarm_clock/alarm_clock_PNG28.png" type="image/x-icon">
 {%endblock favicon%}
@@ -16,15 +16,20 @@
 
 
 
-    <li class="breadcrumb-item active">Dashboard</li>
+    <li class="breadcrumb-item active">User</li>
 </ol>
 
 <div class="container-fluid">
+
     <div class="row">
+
+    </div>
+
+    <div class="row d-flex justify-content-center">
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h4>ME</h4>
+                    <h4>{% firstof user.get_full_name user.username %}</h4>
                     <p><b>DATE:</b> {%if num_days is 0 %}Today{%else%}{{date_user|date:"Y-m-d"}}{%endif%}</p>
 
 
@@ -84,7 +89,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h4>ME</h4>
+                    <h4>Month:</h4>
                    <p>
                     <b>MONTH:</b> {%if user_num_months is 0 %}This Month {%else%} {{uer_month|date:"Y-m"}}{%endif%}
                    </p>
@@ -142,102 +147,10 @@
             </div>
         </div>
 
-
-
-        <!---team-->
-        {% if request.user == team.created_by %}
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h4>TEAM</h4>
-
-                    <p><b>TEAM MONTH:</b>
-                        {%if team_num_months is 0 %}Current Month {%else %}{{team_month|date:"Y-m"}} {%endif%}
-                    </p>
-                </div>
-
-                <div class="card-body">
-                        {% if time_for_team_and_month > 0 %}
-
-                        <table class="table table-hover">
-
-                            <thead>
-                                <tr>
-                                    <th>NAME</th>
-                                    <th>TIME</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {% for member in members %}
-
-                                    <tr>
-                                        <td>
-                                            
-                                            <a href="{% url 'time-dashboard-user' member.id %}">
-                                                {% firstof member.get_full_name member.uername %}
-                                            </a>
-                                        </td>
-
-                                        <td>
-                                            {{member.time_for_user_and_team_and_month | format_minutes  }}
-                                        </td>
-                                    </tr>
-                                {% endfor%}
-                            </tbody>
-
-                        </table>
-
-                        {%else%}
-
-                        <hr>No Team record found
-
-                        {%endif%}
-
-                    <a href="?team_num_months={{team_num_months|add:'1'}}" class="btn btn-sm btn-info">Previous</a>
-                    {%if team_num_months > 0 %}
-                    <a href="?team_num_months={{team_num_months|add:'-1'}}" class="btn btn-sm btn-success">Next</a>
-                    {%endif%}
-                </div>
-            </div>
-        </div>
-
-        {%endif%}
     </div>
 
     <hr>
-    <h4 class="p-3 text-center bg-dark text-white">
-        RECENT PROJECTS
-    </h4>
-    <div class="row">
-        
-        {% for project in projects %}
-
-        <div class="col-md-3 mb-2">
-            <div class="card">
-                <div class="card-header">
-                    {{project.title}}
-
-                    <p>Registerd Time: {{project.registered_time | format_minutes}}</p>
-
-                    <p>Total Tasks: {{project.num_tasks_todo}}</p>
-                </div>
-
-                <div class="card-footer">
-                    <a href="{%url 'time-project-detail' project.id %}">Details</a>
-                </div>
-            </div>
-        </div>
-
-        {%empty%}
-
-        <div class="col">
-            <p>NO projects yet</p>
-        </div>
-
-        {%endfor%}
-    </div>
+   
 </div>
 
 
