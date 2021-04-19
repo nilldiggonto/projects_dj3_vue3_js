@@ -35,6 +35,12 @@ def time_edit_profile(request):
         request.user.email = request.POST.get('email','')
         request.user.save()
 
+        if request.FILES:
+            avatar = request.FILES['avatar']
+            timeprofile = request.user.timeprofile
+            timeprofile.avatar = avatar
+            timeprofile.save()
+
         messages.info(request,'Profile edit successfull')
         return redirect('time-account')
     return render(request,template_name,{'user':user})

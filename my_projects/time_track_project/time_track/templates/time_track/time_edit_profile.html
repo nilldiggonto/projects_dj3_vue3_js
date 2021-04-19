@@ -9,47 +9,70 @@
 {%block content%}
 {%include 'time_track/time_nav.html'%}
 <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
-    <li class="breadcrumb-item"><a href="{%url 'time-account' %}">Account</a></li>
-    <li class="breadcrumb-item active">Edit Account</li>
-  </ol>
-  <hr>
+  <li class="breadcrumb-item"><a href="{%url 'time-home' %}">Home</a></li>
+  <li class="breadcrumb-item"><a href="{%url 'time-account' %}">Account</a></li>
+  <li class="breadcrumb-item active">Edit Account</li>
+</ol>
+<hr>
 
-  <div class="container">
-      <div class="row d-flex justify-content-center">
-          <div class="col-md-6">
-              <div class="card">
-                  <div class="card-header">
-                    <h4>EDIT PROFILE</h4>
-                  </div>
-                  <div class="card-body">
-                      <form action="" method="post">
-                          {%csrf_token%}
-                          <div class="form-group">
-                            <label for="fname">First Name:</label>
-                            <input name="first_name" type="text" class="form-control" placeholder="Enter firstname" id="first_name" {%if user.first_name%}value="{{user.first_name}}"{%endif%}>
-                          </div>
+<div class="container">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4>EDIT PROFILE</h4>
+        </div>
+        <div class="card-body">
+          <img src="{{request.user.timeprofile.get_avatar}}" alt="" style="height: 50px; max-width: 100%;">
 
-                          <div class="form-group">
-                            <label for="lname">Last Name:</label>
-                            <input name="last_name" type="text" class="form-control" placeholder="Enter lastname" id="last_name" {%if user.last_name%}value="{{user.last_name}}"{%endif%}>
-                          </div>
+          <form action="" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            <div class="form-group">
+              <label for="fname">First Name:</label>
+              <input name="first_name" type="text" class="form-control" placeholder="Enter firstname" id="first_name"
+                {%if user.first_name %} value="{{user.first_name}}" {%endif%}>
+            </div>
 
-                          <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input name="email" type="text" class="form-control" placeholder="Enter email" id="email" {%if user.email%}value="{{user.email}}"{%endif%}>
-                          </div>
+            <div class="form-group">
+              <label for="lname">Last Name:</label>
+              <input name="last_name" type="text" class="form-control" placeholder="Enter lastname" id="last_name" 
+              {%if user.last_name %} value="{{user.last_name}}" {%endif%}>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input name="email" type="text" class="form-control" placeholder="Enter email" id="email" 
+              {%if user.email %} value="{{user.email}}" {%endif%}>
+            </div>
+
+            <div class="custom-file mb-3">
+              <input type="file" class="custom-file-input" id="customFile" name="avatar">
+              <label class="custom-file-label" for="customFile">Choose Avatar</label>
+            </div>
 
 
 
-                          <button type="submit" class="btn btn-primary">save change</button>
-                      </form>
-                  </div>
-              </div>
-
-          </div>
+            <button type="submit" class="btn btn-primary">save change</button>
+          </form>
+        </div>
       </div>
+
+    </div>
   </div>
+</div>
 
 
 {%endblock%}
+
+
+{%block script%}
+
+<script>
+  // Add the following code if you want the name of the file appear on select
+  $(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+  });
+  </script>
+
+{%endblock script%}
