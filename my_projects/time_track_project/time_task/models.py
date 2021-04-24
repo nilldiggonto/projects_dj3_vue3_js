@@ -62,8 +62,8 @@ class TaskPrimary(models.Model):
 #time track
 class Entry(models.Model):
     team        = models.ForeignKey(Team,related_name='entries',on_delete=models.CASCADE)
-    project     = models.ForeignKey(ProjectTask,related_name='entries', on_delete=models.CASCADE)
-    task        = models.ForeignKey(TaskPrimary,related_name='entries', on_delete=models.CASCADE)
+    project     = models.ForeignKey(ProjectTask,related_name='entries', on_delete=models.CASCADE,blank=True,null=True)
+    task        = models.ForeignKey(TaskPrimary,related_name='entries', on_delete=models.CASCADE,blank=True,null=True)
     minutes     = models.IntegerField(default=0)
     is_track    = models.BooleanField(default=False)
     created_by  = models.ForeignKey(User,related_name='entries',on_delete=models.CASCADE)

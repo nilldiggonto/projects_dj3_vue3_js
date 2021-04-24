@@ -8,9 +8,7 @@ from .models import ProjectTask,Entry
 
 
 def api_start_timer(request):
-    entry = Entry.objects.create(
-        team_id = request.user.timeprofile.active_team_id,minutes=0,created_by=request.user,is_track=False
-    )
+    entry = Entry.objects.create( team_id = request.user.timeprofile.active_team_id,minutes=0,created_by=request.user,is_track=False,created_at=datetime.now())
 
     return JsonResponse({'success':True})
 

@@ -46,7 +46,7 @@
             
             <li class="nav-item" v-else>
               <a @click="stopTimer()" class="nav-link" href="">
-                <span>[[readableSecond]] stop</span>
+                <span>[[ readableSeconds ]] stop</span>
               </a>
             </li>
           </ul>
@@ -158,23 +158,74 @@
         timer:null,
         entryID:0,
         startTime: '{{start_time}}',
-        readableSecond:2,
+        // readableSecond:2,
       }
     },
-    elimiters: ['[[',']]'],
+    delimiters: ['[[',']]'],
     methods:{
       startTimer(){
-        fetch('') //work from here
+        fetch('/time/projects/api/start_timer/',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'X-CSRFToken': '{{csrf_token}}'
+          }
+        })
+        .then((response)=>{
+          return response.json()
+        })
+        .then((result)=>{
+          this.startTime = new Date()
+          this.trackingTime = true
+          this.timer = setInterval(()=>{
+            this.seconds = ( new Date() - this.startTime)/100
+          },1000)
+        }) //work from here
       },
       stopTimer(){
+        fetch('/time/projects/api/stop_timer/',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'X-CSRFToken': '{{csrf_token}}'
+          }
+        })
+        .then((response)=>{
+          return response.json()
+        })
+        .then((result)=>{
+          this.entryID = result.entryID
+          this.showTrackingModal = true
+          this.trackingTime = false
+          window.clearTimeout(this.timer)
+        })
 
       },
+      discardTimer(){
+        fetch('/time/projects/api/discard_timer/',{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json',
+            'X-CSRFToken': '{{csrf_token}}'
+          }
+        })
+        .then((response)=>{
+          this.seconds = 0
+          this.showTrackingModal = false
+
+        })
+
+      },
+      addLater(){
+        this.seconds =0
+        this.showTrackingModal= false
+      }
     },
     mounted(){
         if (this.seconds !==0){
           this.trackingTime = true,
           this.timer = setInterval(()=>{
-            this.seconds = (new Datet() - new Date(this.startTime)) / 1000
+            this.seconds = (new Date() - new Date(this.startTime)) / 1000
           },1000)
         }
       },
