@@ -6,7 +6,8 @@ from .views import home_view,project_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',home_view,name='homepage'),
+    # path('',home_view,name='homepage'),
+    path('',include('my_info.urls')),
     path('project/list/',project_list,name='project-list'),
 
     path('social/',include('social_project.social_app.urls')),

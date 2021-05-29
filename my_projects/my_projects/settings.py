@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'time_track_project.time_task',
     'time_track_project.time_dashboard',
 
+    ##
+    'my_info',
+
 
 ]
 
