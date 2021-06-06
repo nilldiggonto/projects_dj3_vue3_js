@@ -1,0 +1,1 @@
+#### This app contains the information about django User,Usermanager,AbstractUser
