@@ -4,9 +4,11 @@ from django.urls import reverse_lazy
 
 from .models import ClassDuration,CourseInfo,PrefectStudent
 from .forms import ClassDurationForm,CourseInfoForm,ClassSelectForm
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
-class ClassSelectFormView(FormView):
+class ClassSelectFormView(LoginRequiredMixin,FormView):
     form_class= ClassSelectForm
     template_name = 'courses/main.html'
     success_url = reverse_lazy('course:add-class')
@@ -15,7 +17,7 @@ class ClassSelectFormView(FormView):
         self.request.session['class_name'] = self.request.POST.get('class_name').lower().capitalize()
         return super().post(*args,**kwargs)
 
-class AddClassFormView(FormView):
+class AddClassFormView(LoginRequiredMixin,FormView):
     template_name = 'courses/add.html'
     success_url = reverse_lazy('home-page')
 
