@@ -17,8 +17,8 @@ class ClassDuration(PrefectStudent):
     def __str__(self):
         return str(self.length)
 
-class NormalStudent(models.Model):
-    class_belong = models.CharField(max_length=120)
+class CourseInfo(PrefectStudent):
+    course_name = models.CharField(max_length=120)
 
     def __str__(self):
-        return str(self.class_belong)
+        return str(self.course_name)
