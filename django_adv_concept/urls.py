@@ -1,9 +1,11 @@
 
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path,include
+from .views import home_view
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',home_view,name='home-page'),
+    path('course/',include('courses.urls',namespace='course'))
 ]
 
 admin.site.site_header = 'Teacher Student Council' #admin stie name change
