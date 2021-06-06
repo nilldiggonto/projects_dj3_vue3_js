@@ -30,6 +30,8 @@ INSTALLED_APPS = [
 
     ##
     'users',
+    'students',
+    'courses',
 ]
 
 AUTH_USER_MODEL = 'users.Customuser'
