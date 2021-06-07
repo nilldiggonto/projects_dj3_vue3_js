@@ -6,6 +6,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view,name='home-page'),
     path('course/',include('courses.urls',namespace='course')),
+    path('users/',include('users.urls',namespace='users')),
 
     path('login/',login_view,name='login'),
     path('logout/',logout_view,name='logout'),
