@@ -3,7 +3,7 @@ from students.models import Student
 # Create your models here.
 class PrefectStudent(models.Model):
     title       = models.CharField(max_length=120)
-    students    = models.ManyToManyField(Student,blank=True,null=True)
+    students    = models.ManyToManyField(Student,blank=True)
     date        = models.DateTimeField(auto_now_add=True)
 
     # def __str__(self):

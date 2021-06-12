@@ -33,9 +33,10 @@ INSTALLED_APPS = [
     'students',
     'courses',
     'barcode_app',
+    'dj_signals_app',
 ]
 
-AUTH_USER_MODEL = 'users.Customuser'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
